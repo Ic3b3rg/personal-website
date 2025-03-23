@@ -1,0 +1,113 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card/index.astro";
+import IntroCard from "../components/IntroCard.astro";
+import ContactsCard from "../components/ContactsCard.astro";
+import TimeZone from "../components/TimeZone/TimeZoneCard.astro";
+import AboutMe from "../components/AboutMe.astro";
+import Now from "../components/Now.astro";
+import { getCollection } from "astro:content";
+import { formatDate } from "../lib/helpers";
+
+const posts = (await getCollection("blog"))?.sort(
+  (blogEntryA, blogEntryB) =>
+    (blogEntryB.data.pubDate || new Date()).getTime() -
+    (blogEntryA.data.pubDate || new Date()).getTime(),
+);
+---
+
+<script>
+  import { stagger, animate } from "motion";
+  const cards = Array.from(document.querySelectorAll(".card"));
+
+  const sequence = [];
+
+  animate([
+    [
+      ".loader",
+      {
+        opacity: [1, 0],
+        pointerEvents: "none",
+      },
+    ],
+    [
+      cards,
+      { y: ["40%", "0%"], opacity: [0, 1] },
+      {
+        at: "-0.1",
+        duration: 0.4,
+        delay: stagger(0.3),
+      },
+    ],
+  ]);
+</script>
+
+<Layout
+  title="Silvio Ceccarini - Freelance front-end Developer"
+  description="I'm a developer based in Italy, with a passion for turning ideas into digital experiences that really work. My primary tools of choice include: Typescript, React, React-Native, Angular, and Node.js."
+>
+  <main
+    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+  >
+    <IntroCard />
+    <AboutMe />
+    <ContactsCard />
+    <TimeZone />
+    <Now />
+    <Card
+      colSpan="md:col-span-1"
+      rowSpan="md:row-span-2"
+      title="Tech"
+      colorText="text-neutral-900"
+    >
+      <div class="h-full w-full absolute inset-0 -z-10">
+        <div
+          class="flex flex-col text-white justify-center items-center w-full h-full"
+        >
+          <div class="w-full">Tech</div>
+        </div>
+      </div>
+    </Card>
+    <Card
+      colSpan="md:col-span-1"
+      rowSpan="md:row-span-1 flex gap-4"
+      title="Projects"
+      href="/Projects"
+    >
+      <div class="flex flex-col gap-4">
+        {
+          posts?.slice(0, 3).map((post) => (
+            // <a
+            //   class="text-sm md:text-base decoration-none flex justify-between"
+            //   href={`/blog/${post.id}`}
+            // >
+            <div class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0">
+              <p class="inline-block whitespace-nowrap text-xs">
+                {post.data.title}
+              </p>
+              {post.data.pubDate && (
+                <time
+                  class="text-right tabular-nums text-xs"
+                  datetime={post.data.pubDate.toISOString()}
+                  data-date={post.data.pubDate.toISOString()}
+                >
+                  {formatDate(post.data.pubDate)}
+                </time>
+              )}
+            </div>
+            // </a>
+          ))
+        }
+      </div>
+    </Card>
+    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
+      <p class="text-xs">
+        © 2025 · Crafted with ♥️ using <a
+          href="https://astro.build/"
+          target="_blank"
+          class="text-primary-700">Astro</a
+        > by TheCodingMan.
+      </p>
+    </Card>
+  </main>
+</Layout>

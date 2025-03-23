@@ -1,0 +1,9 @@
+---
+import Card from "../Card/index.astro";
+import TimeZone from "./TimeZone";
+---
+
+<Card colSpan="lg:col-span-2" rowSpan="md:row-span-2" title="Time zone">
+  <!-- Carica il componente Solid in ambiente client -->
+  <TimeZone client:load />
+</Card>
