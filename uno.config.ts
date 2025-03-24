@@ -5,7 +5,7 @@ export default defineConfig({
   content: {
     filesystem: [
       // Narrow scope to specific directories
-      "src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}}",
+      "src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro.css}}",
       "src/components/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}}",
       "src/pages/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}}",
       "src/layouts/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}}"
@@ -63,6 +63,25 @@ export default defineConfig({
       },
     },
   },
+  preflights: [
+    {
+      getCSS: ({ theme }) => {
+        const primary = theme.colors.primary;
+        return `:root {
+          --primary-50: ${primary[50]};
+          --primary-100: ${primary[100]};
+          --primary-200: ${primary[200]};
+          --primary-300: ${primary[300]};
+          --primary-400: ${primary[400]};
+          --primary-500: ${primary[500]};
+          --primary-600: ${primary[600]};
+          --primary-700: ${primary[700]};
+          --primary-800: ${primary[800]};
+          --primary-900: ${primary[900]};
+        }`;
+      },
+    },
+  ],
   presets: [
     presetWind3(),
     presetWebFonts({

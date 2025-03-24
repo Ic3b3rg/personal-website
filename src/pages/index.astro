@@ -8,7 +8,6 @@ import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
 import { getCollection } from "astro:content";
 import { formatDate } from "../lib/helpers";
-
 const posts = (await getCollection("blog"))?.sort(
   (blogEntryA, blogEntryB) =>
     (blogEntryB.data.pubDate || new Date()).getTime() -
@@ -19,8 +18,6 @@ const posts = (await getCollection("blog"))?.sort(
 <script>
   import { stagger, animate } from "motion";
   const cards = Array.from(document.querySelectorAll(".card"));
-
-  const sequence = [];
 
   animate([
     [
