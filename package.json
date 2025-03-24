@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.3.0",
     "@astrojs/solid-js": "^5.0.5",
+    "@iconify-json/devicon-plain": "^1.2.20",
     "@iconify-json/ri": "^1.2.5",
     "astro": "^5.5.4",
     "astro-icon": "^1.1.5",

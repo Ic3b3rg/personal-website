@@ -1,0 +1,30 @@
+---
+import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Card
+  colSpan="md:col-span-1"
+  rowSpan="md:row-span-2"
+  title="Technologies"
+  colorText="text-neutral-900"
+>
+  <div class="h-full">
+    <div
+      class="flex flex-wrap text-white text-5xl justify-center items-center w-full h-full"
+    >
+      <Icon name="devicon-plain:javascript" class="h-6" />
+      <Icon name="ri:reactjs-fill" class="h-10" />
+      <Icon name="ri:angularjs-line" class="h-6" />
+      <Icon name="devicon-plain:typescript" class="h-6" />
+      <Icon name="ri:nextjs-line" class="h-6" />
+      <Icon name="ri:tailwind-css-line" class="h-6" />
+      <Icon name="ri:github-line" class="h-6" />
+      <Icon name="devicon-plain:reactrouter-wordmark" class="h-6" />
+      <Icon name="devicon-plain:nodejs-wordmark" class="h-6" />
+      <Icon name="devicon-plain:styledcomponents-wordmark" class="h-6" />
+      <Icon name="devicon-plain:jest" class="h-6" />
+      <Icon name="devicon-plain:cypressio-wordmark" class="h-6" />
+    </div>
+  </div>
+</Card>
