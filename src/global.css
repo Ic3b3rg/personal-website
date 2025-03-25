@@ -11,3 +11,79 @@ body:before {
     -webkit-mask: linear-gradient(-360deg, transparent 40%, white);
     mask: linear-gradient(-360deg, transparent 40%, white);
 }
+
+.github-timeline {
+  margin: 0 auto;
+}
+
+.timeline-dates {
+  white-space: nowrap;
+}
+
+
+
+.timeline-date {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+
+.timeline-event {
+  display: none;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.timeline-event.selected {
+  display: block;
+}
+
+.event-title {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.event-date {
+  display: block;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.event-description {
+  color: #444;
+}
+
+/* Per browser basati su WebKit (Chrome, Safari, etc.) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+/* Per Firefox */
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+/* Per browser basati su WebKit (Chrome, Safari, Edge) */
+.scrollbar-tiny::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar-tiny::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* Colore della thumb, modificabile */
+  border-radius: 10px;
+}
+
+.scrollbar-tiny::-webkit-scrollbar-track {
+  background: transparent; /* Traccia trasparente */
+}
+
+/* Per Firefox */
+.scrollbar-tiny {
+  scrollbar-width: thin; /* Imposta la larghezza sottile */
+  scrollbar-color: var(--primary-500) transparent; /* thumb color e track color trasparente */
+}
