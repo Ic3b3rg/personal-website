@@ -1,9 +1,11 @@
 ---
+import { GITHUB_USERNAME } from "../../lib/constants";
+import type { GithubEvent } from "../../types/githubEvent";
 import Card from "../Card/index.astro";
-import type { GithubEvent } from "./GithubEvents.types";
 import GitHubTimeline from "./GithubTimeline";
+
 const githubEvents = await fetch(
-  "https://api.github.com/users/Ic3b3rg/events",
+  `https://api.github.com/users/${GITHUB_USERNAME}/events`,
 ).then((res) => res.json() as Promise<GithubEvent[]>);
 
 const groupedEventsForDate = githubEvents.reduce(

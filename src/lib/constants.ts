@@ -5,7 +5,9 @@ export const LINKS = {
   telegram: "https://t.me/TheCodingMan",
   email: "ceccarinisilvio8@gmail.com",
 };
+export const GITHUB_USERNAME = "Ic3b3rg";
+
 //todo fix the code
 export const loaderAnimation = [
-  [".loader", { opacity: [1, 0], pointerEvents: "none", easing: "ease-out" }]
-]
+  [".loader", { opacity: [1, 0], pointerEvents: "none", easing: "ease-out" }],
+];

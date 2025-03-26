@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.0",
@@ -24,6 +25,7 @@
     "autoprefixer": "^10.4.21",
     "markdown-it": "^14.1.0",
     "motion": "^12.5.0",
+    "prettier-plugin-astro": "^0.14.1",
     "sanitize-html": "^2.15.0",
     "typescript": "^5.8.2",
     "unocss": "^66.1.0-beta.6"

@@ -1,13 +1,20 @@
 ---
-import { getCollection } from "astro:content";
+import RepoRow from "../../components/Project/RepoRow.astro";
 import Layout from "../../layouts/Layout.astro";
-import PostRow from "../../components/Blog/PostRow.astro";
+import { GITHUB_USERNAME } from "../../lib/constants";
+import type { GithubRepo } from "../../types/githubRepos.";
 
-const posts = (await getCollection("blog"))?.sort(
-  (blogEntryA, blogEntryB) =>
-    (blogEntryB.data.pubDate || new Date()).getTime() -
-    (blogEntryA.data.pubDate || new Date()).getTime(),
-);
+const repos = await fetch(
+  `https://api.github.com/users/${GITHUB_USERNAME}/repos`,
+)
+  .then((res) => res.json() as Promise<GithubRepo[]>)
+  .then(sortReposByMostRecent);
+
+function sortReposByMostRecent(repos: GithubRepo[]): GithubRepo[] {
+  return repos.sort(
+    (a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at),
+  );
+}
 ---
 
 <script>
@@ -30,14 +37,15 @@ const posts = (await getCollection("blog"))?.sort(
       class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
       >Back</a
     >
-    <h1 class="text-4xl font-bold mb-4 text-neutral-100">Posts</h1>
+    <h1 class="text-4xl font-bold mb-4 text-neutral-100">Projects</h1>
     <ul class="w-full">
       {
-        posts?.map((post) => (
-          <PostRow
-            title={post.data.title || "No title"}
-            date={post.data.pubDate || new Date()}
-            id={post.id}
+        repos?.map((repo) => (
+          <RepoRow
+            title={repo.name || "No title"}
+            date={new Date(repo.updated_at)}
+            url={repo.html_url}
+            language={repo.language || "No language"}
           />
         ))
       }

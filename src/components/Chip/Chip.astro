@@ -1,0 +1,13 @@
+---
+interface Props {
+  language: string;
+}
+
+const { language } = Astro.props;
+---
+
+<span
+  class="inline-block px-2 py-1 rounded-full border-primary-500 border font-extrabold text-white text-sm mb-1"
+>
+  {language}
+</span>

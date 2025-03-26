@@ -3,18 +3,11 @@ import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card/index.astro";
 import IntroCard from "../components/IntroCard.astro";
 import ContactsCard from "../components/ContactsCard.astro";
-import TimeZone from "../components/TimeZone/TimeZoneCard.astro";
+import Timeline from "../components/Timeline/TimelineCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
-import { getCollection } from "astro:content";
 
 import Technologies from "../components/Technologies.astro";
-
-const posts = (await getCollection("blog"))?.sort(
-  (blogEntryA, blogEntryB) =>
-    (blogEntryB.data.pubDate || new Date()).getTime() -
-    (blogEntryA.data.pubDate || new Date()).getTime(),
-);
 ---
 
 <script>
@@ -51,15 +44,16 @@ const posts = (await getCollection("blog"))?.sort(
     <IntroCard />
     <AboutMe />
     <ContactsCard />
-    <TimeZone />
-    <Now />
+    <Timeline />
     <Technologies />
+    <Now />
     <Card
       colSpan="md:col-span-1"
-      rowSpan="md:row-span-1 flex gap-4"
+      rowSpan="md:row-span-1"
       title="Projects"
-      href="/Projects"
+      href="/projects"
     />
+
     <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
       <p class="text-xs">
         © 2025 · Crafted with ♥️ using <a

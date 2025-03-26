@@ -1,64 +1,21 @@
 body:before {
-    --line-color: var(--primary-800);
-    --line-size: 80px;
-    content: "";
-    height: 100vh;
-    width: 101vw;
-    position: fixed;
-    background: linear-gradient(90deg, var(--line-color) 1px, transparent 1px) 0 0 / var(--line-size) var(--line-size), linear-gradient(var(--line-color) 1px, transparent 1px) 0 0 / var(--line-size) var(--line-size);
-    top: 0;
-    z-index: -1;
-    -webkit-mask: linear-gradient(-360deg, transparent 40%, white);
-    mask: linear-gradient(-360deg, transparent 40%, white);
+  --line-color: var(--primary-800);
+  --line-size: 80px;
+  content: "";
+  height: 100vh;
+  width: 101vw;
+  position: fixed;
+  background:
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) 0 0 /
+      var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) 0 0 /
+      var(--line-size) var(--line-size);
+  top: 0;
+  z-index: -1;
+  -webkit-mask: linear-gradient(-360deg, transparent 40%, white);
+  mask: linear-gradient(-360deg, transparent 40%, white);
 }
 
-.github-timeline {
-  margin: 0 auto;
-}
-
-.timeline-dates {
-  white-space: nowrap;
-}
-
-
-
-.timeline-date {
-  background: none;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-}
-
-
-.timeline-event {
-  display: none;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-}
-
-.timeline-event.selected {
-  display: block;
-}
-
-.event-title {
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.event-date {
-  display: block;
-  color: #666;
-  margin-bottom: 15px;
-}
-
-.event-description {
-  color: #444;
-}
-
-/* Per browser basati su WebKit (Chrome, Safari, etc.) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -67,23 +24,22 @@ body:before {
   scrollbar-width: none;
 }
 
-/* Per browser basati su WebKit (Chrome, Safari, Edge) */
 .scrollbar-tiny::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
 .scrollbar-tiny::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.5); /* Colore della thumb, modificabile */
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
 
 .scrollbar-tiny::-webkit-scrollbar-track {
-  background: transparent; /* Traccia trasparente */
+  background: transparent;
 }
 
 /* Per Firefox */
 .scrollbar-tiny {
-  scrollbar-width: thin; /* Imposta la larghezza sottile */
-  scrollbar-color: var(--primary-500) transparent; /* thumb color e track color trasparente */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-500) transparent;
 }
