@@ -4,6 +4,7 @@ export const LINKS = {
   discord: "https://discordapp.com/users/163300027618295808",
   telegram: "https://t.me/TheCodingMan",
   email: "ceccarinisilvio8@gmail.com",
+  calDotCom: "https://cal.com/silvio-ceccarini-gqz1ul",
 };
 export const GITHUB_USERNAME = "Ic3b3rg";
 
