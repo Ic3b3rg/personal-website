@@ -1,8 +1,11 @@
 ---
+import { useTranslations } from "../../i18n/utils";
 import { GITHUB_USERNAME } from "../../lib/constants";
 import type { GithubEvent } from "../../types/githubEvent";
 import Card from "../Card/index.astro";
 import GitHubTimeline from "./GithubTimeline";
+
+const t = useTranslations(Astro.url);
 
 const githubEvents = await fetch(
   `https://api.github.com/users/${GITHUB_USERNAME}/events`,
@@ -21,6 +24,10 @@ const groupedEventsForDate = githubEvents.reduce(
 );
 ---
 
-<Card colSpan="lg:col-span-2" rowSpan="md:row-span-2" title="Last activities">
+<Card
+  colSpan="lg:col-span-2"
+  rowSpan="md:row-span-2"
+  title={t("home.lastActivities")}
+>
   <GitHubTimeline client:load events={groupedEventsForDate} />
 </Card>

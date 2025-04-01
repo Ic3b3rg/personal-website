@@ -1,0 +1,69 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card/index.astro";
+import IntroCard from "../../components/IntroCard.astro";
+import ContactsCard from "../../components/ContactsCard.astro";
+import Timeline from "../../components/Timeline/TimelineCard.astro";
+import AboutMe from "../../components/AboutMe.astro";
+import Now from "../../components/Now.astro";
+
+import Technologies from "../../components/Technologies.astro";
+import { useTranslations } from "../../i18n/utils";
+const t = useTranslations(Astro.url);
+---
+
+<script>
+  import { stagger, animate } from "motion";
+  const cards = Array.from(document.querySelectorAll(".card"));
+
+  animate([
+    [
+      ".loader",
+      {
+        opacity: [1, 0],
+        pointerEvents: "none",
+      },
+    ],
+    [
+      cards,
+      { y: ["40%", "0%"], opacity: [0, 1] },
+      {
+        at: "-0.1",
+        duration: 0.4,
+        delay: stagger(0.3),
+      },
+    ],
+  ]);
+</script>
+
+<Layout
+  title="Silvio Ceccarini - Freelance front-end Developer"
+  description="Sviluppatore italiano con una vera passione per dare vita alle idee attraverso esperienze digitali efficaci e coinvolgenti. Lavoro principalmente con TypeScript, React, React Native, Angular e Node.js."
+>
+  <main
+    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+  >
+    <IntroCard />
+    <AboutMe />
+    <ContactsCard />
+    <Timeline />
+    <Technologies />
+    <Now />
+    <Card
+      colSpan="md:col-span-1"
+      rowSpan="md:row-span-1"
+      title={t("home.projects")}
+      href="/projects"
+    />
+
+    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
+      <p class="text-xs">
+        © 2025 · Creato con ♥️ usando <a
+          href="https://astro.build/"
+          target="_blank"
+          class="text-primary-700">Astro</a
+        > - TheCodingMan.
+      </p>
+    </Card>
+  </main>
+</Layout>

@@ -1,7 +1,8 @@
 ---
 import { LINKS } from "../lib/constants";
 import "../global.css";
-
+import { getLangFromUrl } from "../i18n/utils";
+import LanguageSwitcher from "../components/LanguageSwitcher/LanguageSwitcher";
 interface Props {
   title: string;
   description: string;
@@ -67,10 +68,11 @@ const schema =
         datePublished: pubDate || new Date().toISOString(),
         dateModified: pubDate || new Date().toISOString(),
       };
+const lang = getLangFromUrl(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -110,6 +112,7 @@ const schema =
   >
     <slot name="loader" />
     <slot />
+    <LanguageSwitcher client:load />
   </body>
 </html>
 

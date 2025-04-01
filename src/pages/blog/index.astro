@@ -12,7 +12,6 @@ const posts = (await getCollection("blog"))?.sort(
 
 <script>
   import { animate } from "motion";
-  import { loaderAnimation } from "../../lib/constants";
 
   animate([
     [".loader", { opacity: [1, 0], pointerEvents: "none", easing: "ease-out" }],

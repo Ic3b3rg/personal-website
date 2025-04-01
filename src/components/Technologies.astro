@@ -1,12 +1,15 @@
 ---
+import { useTranslations } from "../i18n/utils";
 import Card from "./Card/index.astro";
 import { Icon } from "astro-icon/components";
+
+const t = useTranslations(Astro.url);
 ---
 
 <Card
   colSpan="md:col-span-1"
   rowSpan="md:row-span-2"
-  title="Technologies"
+  title={t("home.technologies")}
   colorText="text-neutral-900"
 >
   <div class="h-full">

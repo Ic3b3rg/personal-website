@@ -1,0 +1,54 @@
+---
+import RepoRow from "../../../components/Project/RepoRow.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { GITHUB_USERNAME } from "../../../lib/constants";
+import type { GithubRepo } from "../../../types/githubRepos.";
+
+const repos = await fetch(
+  `https://api.github.com/users/${GITHUB_USERNAME}/repos`,
+)
+  .then((res) => res.json() as Promise<GithubRepo[]>)
+  .then(sortReposByMostRecent);
+
+function sortReposByMostRecent(repos: GithubRepo[]): GithubRepo[] {
+  return repos.sort(
+    (a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at),
+  );
+}
+---
+
+<script>
+  import { animate } from "motion";
+
+  animate([
+    [".loader", { opacity: [1, 0], pointerEvents: "none", easing: "ease-out" }],
+  ]);
+</script>
+
+<Layout
+  title="Silvio Ceccarini - Progetti"
+  description="Trasformo idee in soluzioni digitali che funzionano davvero — con passione, precisione e un occhio sempre puntato sull’esperienza utente."
+>
+  <main
+    class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8"
+  >
+    <a
+      href="/"
+      class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
+      >Back</a
+    >
+    <h1 class="text-4xl font-bold mb-4 text-neutral-100">Progetti</h1>
+    <ul class="w-full">
+      {
+        repos?.map((repo) => (
+          <RepoRow
+            title={repo.name || "Nessun titolo"}
+            date={new Date(repo.updated_at)}
+            url={repo.html_url}
+            language={repo.language || "Nessuna linguaggio"}
+          />
+        ))
+      }
+    </ul>
+  </main>
+</Layout>
