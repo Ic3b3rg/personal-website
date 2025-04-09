@@ -16,3 +16,5 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+api-data.hash
+build.log
