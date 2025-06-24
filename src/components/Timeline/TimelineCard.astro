@@ -9,7 +9,17 @@ const t = useTranslations(Astro.url);
 
 const githubEvents = await fetch(
   `https://api.github.com/users/${GITHUB_USERNAME}/events`,
-).then((res) => res.json() as Promise<GithubEvent[]>);
+  {
+    headers: {
+      Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}`,
+    },
+  },
+)
+  .then((res) => res.json() as Promise<GithubEvent[]>)
+  .catch((error) => {
+    console.error("Error fetching GitHub events:", error);
+    return [];
+  });
 
 const groupedEventsForDate = githubEvents.reduce(
   (acc, event) => {
@@ -22,7 +32,6 @@ const groupedEventsForDate = githubEvents.reduce(
   },
   {} as Record<string, GithubEvent[]>,
 );
-console.log(githubEvents);
 ---
 
 <Card
