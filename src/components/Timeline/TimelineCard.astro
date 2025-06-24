@@ -20,7 +20,6 @@ const githubEvents = await fetch(
     console.error("Error fetching GitHub events:", error);
     return [];
   });
-
 const groupedEventsForDate = githubEvents.reduce(
   (acc, event) => {
     const date = new Date(event.created_at).toISOString().split("T")[0];
