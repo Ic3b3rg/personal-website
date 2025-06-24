@@ -11,7 +11,7 @@ const githubEvents = await fetch(
   `https://api.github.com/users/${GITHUB_USERNAME}/events`,
   {
     headers: {
-      Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}`,
+      Authorization: `Bearer ${import.meta.env.GH_TOKEN}`,
     },
   },
 )
