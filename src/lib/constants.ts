@@ -7,8 +7,3 @@ export const LINKS = {
   calDotCom: "https://cal.com/silvio-ceccarini-gqz1ul",
 };
 export const GITHUB_USERNAME = "Ic3b3rg";
-
-//todo fix the code
-export const loaderAnimation = [
-  [".loader", { opacity: [1, 0], pointerEvents: "none", easing: "ease-out" }],
-];
