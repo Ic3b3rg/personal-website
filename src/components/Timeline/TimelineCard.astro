@@ -7,20 +7,26 @@ import GitHubTimeline from "./GithubTimeline";
 
 const t = useTranslations(Astro.url);
 
-const githubEvents = await fetch(
-  `https://api.github.com/users/${GITHUB_USERNAME}/events`,
-  {
-    headers: {
-      Authorization: `Bearer ${import.meta.env.GH_TOKEN}`,
-    },
-  },
-)
-  .then((res) => res.json() as Promise<GithubEvent[]>)
-  .catch((error) => {
+async function fetchGithubEvents(): Promise<GithubEvent[]> {
+  try {
+    const response = await fetch(
+      `https://api.github.com/users/${GITHUB_USERNAME}/events`,
+      {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.GH_TOKEN}`,
+        },
+      },
+    );
+    const githubEvents = (await response.json()) as GithubEvent[];
+    const filteredEvents = githubEvents.filter((event) => event.public);
+    return filteredEvents;
+  } catch (error) {
     console.error("Error fetching GitHub events:", error);
     return [];
-  });
-const groupedEventsForDate = githubEvents.reduce(
+  }
+}
+
+const groupedEventsForDate = (await fetchGithubEvents()).reduce(
   (acc, event) => {
     const date = new Date(event.created_at).toISOString().split("T")[0];
     if (!acc[date]) {

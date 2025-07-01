@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Cache API data hash
         id: restore-hash
@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy to VPS (via SCP)
         if: steps.check.outputs.should_build == 'true'
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -72,7 +72,7 @@ jobs:
 
       - name: Reload nginx on VPS
         if: steps.check.outputs.should_build == 'true'
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
