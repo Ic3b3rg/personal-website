@@ -1,0 +1,282 @@
+---
+import { LINKS } from "../../lib/constants";
+import type { LandingCopy } from "./copy";
+import "./landing.css";
+
+interface Props {
+  copy: LandingCopy;
+  alternateLanguageHref: string;
+}
+
+const { copy, alternateLanguageHref } = Astro.props;
+const labels =
+  copy.language === "it"
+    ? {
+        skip: "Vai al contenuto",
+        navigation: "Navigazione principale",
+        home: "Silvio Ceccarini, home",
+        services: "Servizi",
+        edition: "Edizione 2026",
+        from: "Da",
+        definition: "Definizione",
+        to: "A",
+        release: "Rilascio",
+        process: "Processo",
+        projectFlow: "Flusso progetto",
+        projectPath: "Percorso del progetto: analisi, sviluppo e rilascio",
+        projectStages: ["Analisi", "Sviluppo", "Rilascio"],
+        alternateLanguage: "English",
+        cover: "Copertina",
+        team: "Team",
+        method: "Metodo",
+        scope: "Competenze",
+        trust: "Testimonianze",
+        contact: "Contatto",
+      }
+    : {
+        skip: "Skip to content",
+        navigation: "Primary navigation",
+        home: "Silvio Ceccarini, home",
+        services: "Services",
+        edition: "Edition 2026",
+        from: "From",
+        definition: "Definition",
+        to: "To",
+        release: "Release",
+        process: "Process",
+        projectFlow: "Project flow",
+        projectPath: "Project path: analysis, development and release",
+        projectStages: ["Analysis", "Development", "Release"],
+        alternateLanguage: "Italiano",
+        cover: "Cover",
+        team: "Team",
+        method: "Method",
+        scope: "Capabilities",
+        trust: "Recommendations",
+        contact: "Contact",
+      };
+---
+
+<div class="manual" data-landing="manual">
+  <a class="landing-skip-link" href="#main-content">{labels.skip}</a>
+
+  <header class="manual-header">
+    <a href="#top" class="manual-mark" aria-label={labels.home}>
+      <span>SC</span>
+      <strong>Silvio Ceccarini</strong>
+    </a>
+    <nav aria-label={labels.navigation}>
+      <a href="#services">{labels.services}</a>
+      <a href="#recommendations">{copy.recommendationsTitle}</a>
+      <a href={alternateLanguageHref}>{labels.alternateLanguage}</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="manual-cover" id="top" data-manual-chapter={labels.cover}>
+      <div class="manual-register manual-register--top" aria-hidden="true">
+      </div>
+      <div class="manual-cover__edition">
+        <span>{copy.role}</span>
+        <span>{labels.edition}</span>
+      </div>
+      <div class="manual-cover__feature">
+        <h1>{copy.headline}</h1>
+        <div
+          class="manual-project-figure"
+          role="img"
+          aria-label={labels.projectPath}
+          data-project-figure
+        >
+          <div class="manual-project-figure__meta" aria-hidden="true">
+            <span>{labels.projectFlow}</span>
+            <span>03 / 03</span>
+          </div>
+          <div class="manual-project-ribbon" aria-hidden="true">
+            <span class="manual-project-ribbon__front"></span>
+            <span class="manual-project-ribbon__fold"></span>
+            <span class="manual-project-ribbon__back"></span>
+            <ol class="manual-project-ribbon__stages">
+              {labels.projectStages.map((stage) => <li>{stage}</li>)}
+            </ol>
+          </div>
+          <span class="manual-project-figure__axis" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="manual-cover__footer">
+        <p>{copy.intro}</p>
+        <div>
+          <p class="manual-proof">{copy.proof}</p>
+          <div class="manual-actions">
+            <a
+              class="landing-button landing-button--primary"
+              href={LINKS.calDotCom}
+              target="_blank"
+              rel="noopener noreferrer">{copy.book}</a
+            >
+            <a class="landing-text-link" href={`mailto:${LINKS.email}`}
+              >{copy.email}</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="manual-register manual-register--bottom" aria-hidden="true">
+      </div>
+    </section>
+
+    <section
+      class="manual-chapter"
+      id="services"
+      data-manual-chapter={`01 / ${labels.services}`}
+    >
+      <header class="manual-chapter__header">
+        <span>01</span>
+        <h2>{copy.services[0].title}</h2>
+      </header>
+      <div class="manual-chapter__body manual-chapter__body--service">
+        <p>{copy.services[0].body}</p>
+        <aside>
+          <span>{labels.from}</span>
+          <strong>{labels.definition}</strong>
+          <span>{labels.to}</span>
+          <strong>{labels.release}</strong>
+        </aside>
+      </div>
+    </section>
+
+    <section class="manual-chapter" data-manual-chapter={`02 / ${labels.team}`}>
+      <header class="manual-chapter__header">
+        <span>02</span>
+        <h2>{copy.services[1].title}</h2>
+      </header>
+      <div class="manual-chapter__body manual-chapter__body--team">
+        <p>{copy.services[1].body}</p>
+        <div class="manual-team-line" aria-hidden="true">
+          <span>Stack</span>
+          <i></i>
+          <span>{labels.process}</span>
+          <i></i>
+          <span>Team</span>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="manual-chapter manual-chapter--orange"
+      data-manual-chapter={`03 / ${labels.method}`}
+    >
+      <header class="manual-chapter__header">
+        <span>03</span>
+        <h2>{copy.approachTitle}</h2>
+      </header>
+      <div class="manual-chapter__body">
+        <p>{copy.approachBody}</p>
+      </div>
+    </section>
+
+    <section
+      class="manual-chapter"
+      data-manual-chapter={`04 / ${labels.scope}`}
+    >
+      <header class="manual-chapter__header">
+        <span>04</span>
+        <h2>{copy.capabilitiesTitle}</h2>
+      </header>
+      <div class="manual-chapter__body manual-chapter__body--capabilities">
+        <p>{copy.capabilitiesBody}</p>
+        <ol>
+          {
+            copy.capabilities.map((capability, index) => (
+              <li>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {capability}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section
+      class="manual-chapter manual-recommendations"
+      id="recommendations"
+      data-manual-chapter={`05 / ${labels.trust}`}
+    >
+      <header class="manual-chapter__header">
+        <span>05</span>
+        <h2>{copy.recommendationsTitle}</h2>
+      </header>
+      <div class="manual-quotes">
+        {
+          copy.recommendations.map((recommendation) => (
+            <blockquote>
+              <p>“{recommendation.quote}”</p>
+              <cite>{recommendation.initials}</cite>
+            </blockquote>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="manual-close"
+      data-manual-chapter={`06 / ${labels.contact}`}
+    >
+      <div class="manual-close__index">06 / {labels.contact}</div>
+      <h2>{copy.contactTitle}</h2>
+      <p>{copy.contactBody}</p>
+      <div class="manual-actions">
+        <a
+          class="landing-button landing-button--primary"
+          href={LINKS.calDotCom}
+          target="_blank"
+          rel="noopener noreferrer">{copy.book}</a
+        >
+        <a class="landing-text-link" href={`mailto:${LINKS.email}`}
+          >{copy.email}</a
+        >
+      </div>
+      <footer>
+        <span>{copy.footerNote}</span>
+        <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </footer>
+    </section>
+  </main>
+
+  <div class="manual-running-state" aria-live="polite" data-manual-state>
+    {labels.cover}
+  </div>
+</div>
+
+<script>
+  const manualState = document.querySelector<HTMLElement>(
+    "[data-manual-state]",
+  );
+  const manualChapters = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-manual-chapter]"),
+  );
+
+  if (
+    manualState &&
+    manualChapters.length > 0 &&
+    "IntersectionObserver" in window
+  ) {
+    const chapterObserver = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visibleEntry) {
+          manualState.textContent =
+            (visibleEntry.target as HTMLElement).dataset.manualChapter ?? "";
+        }
+      },
+      { threshold: [0.25, 0.5, 0.75] },
+    );
+
+    manualChapters.forEach((chapter) => chapterObserver.observe(chapter));
+  }
+</script>
