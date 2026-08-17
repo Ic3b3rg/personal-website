@@ -52,15 +52,70 @@ const currentYear = new Date().getFullYear();
             <span>{labels.projectFlow}</span>
             <span>03 / 03</span>
           </div>
+          <svg
+            class="manual-project-figure__drawing"
+            viewBox="0 0 410 446"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              data-project-path
+              pathLength="1"
+              d="M18 354 L92 302 L164 326 L286 116 L394 84"></path>
+            <path
+              data-project-path
+              pathLength="1"
+              d="M20 392 H130 L218 258 H390"></path>
+          </svg>
           <div class="manual-project-ribbon" aria-hidden="true">
-            <span class="manual-project-ribbon__front"></span>
-            <span class="manual-project-ribbon__fold"></span>
-            <span class="manual-project-ribbon__back"></span>
+            <span class="manual-project-ribbon__front" data-project-plane
+            ></span>
+            <span class="manual-project-ribbon__fold" data-project-plane></span>
+            <span class="manual-project-ribbon__back" data-project-plane></span>
             <ol class="manual-project-ribbon__stages">
-              {labels.projectStages.map((stage) => <li>{stage}</li>)}
+              {
+                labels.projectStages.map((stage) => (
+                  <li data-project-stage>{stage}</li>
+                ))
+              }
             </ol>
           </div>
-          <span class="manual-project-figure__axis" aria-hidden="true"></span>
+          <span
+            class="manual-project-figure__axis"
+            aria-hidden="true"
+            data-project-axis></span>
+        </div>
+
+        <div
+          class="manual-project-compact"
+          role="img"
+          aria-label={labels.projectPath}
+          data-project-compact
+        >
+          <div class="manual-project-compact__meta" aria-hidden="true">
+            <span>{labels.projectFlow}</span>
+            <span>01—03</span>
+          </div>
+          <svg viewBox="0 0 360 82" aria-hidden="true">
+            <path
+              class="manual-project-compact__plane"
+              data-compact-plane
+              d="M74 68 L128 24 H230 L286 68 H226 L205 48 H154 L134 68 Z"
+            ></path>
+            <path
+              class="manual-project-compact__path"
+              data-compact-path
+              pathLength="1"
+              d="M8 68 H92 L132 36 H226 L266 68 H352"></path>
+            <g class="manual-project-compact__nodes">
+              <circle data-compact-node cx="46" cy="68" r="6"></circle>
+              <circle data-compact-node cx="180" cy="36" r="6"></circle>
+              <circle data-compact-node cx="314" cy="68" r="6"></circle>
+            </g>
+          </svg>
+          <ol class="manual-project-compact__stages" aria-hidden="true">
+            {labels.projectStages.map((stage) => <li>{stage}</li>)}
+          </ol>
         </div>
       </div>
       <div class="manual-cover__footer">
@@ -111,12 +166,12 @@ const currentYear = new Date().getFullYear();
       </header>
       <div class="manual-chapter__body manual-chapter__body--team">
         <p>{copy.services[1].body}</p>
-        <div class="manual-team-line" aria-hidden="true">
-          <span>Stack</span>
-          <i></i>
-          <span>{labels.process}</span>
-          <i></i>
-          <span>Team</span>
+        <div class="manual-team-line" aria-hidden="true" data-team-flow>
+          <span data-team-node><b>01</b>Stack</span>
+          <i data-team-link></i>
+          <span data-team-node><b>02</b>{labels.process}</span>
+          <i data-team-link></i>
+          <span data-team-node><b>03</b>Team</span>
         </div>
       </div>
     </section>
@@ -144,10 +199,10 @@ const currentYear = new Date().getFullYear();
       </header>
       <div class="manual-chapter__body manual-chapter__body--capabilities">
         <p>{copy.capabilitiesBody}</p>
-        <ol>
+        <ol data-capabilities-list>
           {
             copy.capabilities.map((capability, index) => (
-              <li>
+              <li data-capability>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {capability}
               </li>
@@ -216,32 +271,7 @@ const currentYear = new Date().getFullYear();
 </div>
 
 <script>
-  const manualState = document.querySelector<HTMLElement>(
-    "[data-manual-state]",
-  );
-  const manualChapters = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-manual-chapter]"),
-  );
+  import { initLandingMotion } from "./landing-motion";
 
-  if (
-    manualState &&
-    manualChapters.length > 0 &&
-    "IntersectionObserver" in window
-  ) {
-    const chapterObserver = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry) {
-          manualState.textContent =
-            (visibleEntry.target as HTMLElement).dataset.manualChapter ?? "";
-        }
-      },
-      { threshold: [0.25, 0.5, 0.75] },
-    );
-
-    manualChapters.forEach((chapter) => chapterObserver.observe(chapter));
-  }
+  initLandingMotion();
 </script>
