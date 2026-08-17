@@ -59,7 +59,7 @@ jobs:
             -o IdentitiesOnly=yes \
             -o UserKnownHostsFile="$RUNNER_TEMP/deploy-ssh/known_hosts" \
             "$SSH_USER@$SSH_HOST" \
-            'tar -xzf - -C /var/www/personal-website && sudo systemctl reload nginx'
+            'tar -xzf - -C /var/www/personal-website/dist && sudo systemctl reload nginx'
 
       - name: Remove temporary SSH files
         if: always()
