@@ -4,62 +4,36 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: "0 2 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
-
-      - name: Cache API data hash
-        id: restore-hash
-        uses: actions/cache@v4
-        with:
-          path: .last_data_hash
-          key: api-hash-${{ runner.os }}
-
-      - name: Fetch API data & check hash
-        id: check
-        run: |
-          echo "📡 Fetching GitHub API data..."
-          curl -s https://api.github.com/users/Ic3b3rg/events > data.json
-
-          NEW_HASH=$(sha256sum data.json | awk '{ print $1 }')
-          OLD_HASH=$(cat .last_data_hash 2>/dev/null || echo "none")
-
-          echo "NEW_HASH=$NEW_HASH" >> $GITHUB_ENV
-          echo "OLD_HASH=$OLD_HASH" >> $GITHUB_ENV
-
-          if [[ "$GITHUB_EVENT_NAME" == "schedule" && "$NEW_HASH" == "$OLD_HASH" ]]; then
-            echo "API unchanged (cron run). Skipping build." >> $GITHUB_STEP_SUMMARY
-            echo "should_build=false" >> $GITHUB_OUTPUT
-          else
-            echo "API changed or push event. Proceeding with build."
-            echo "should_build=true" >> $GITHUB_OUTPUT
-            echo "$NEW_HASH" > .last_data_hash
-          fi
+          node-version: 24
+          cache: npm
 
       - name: Install dependencies
-        if: steps.check.outputs.should_build == 'true'
         run: npm ci
 
       - name: Build project
-        if: steps.check.outputs.should_build == 'true'
         run: npm run build
 
       - name: Deploy to VPS (via SCP)
-        if: steps.check.outputs.should_build == 'true'
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -71,7 +45,6 @@ jobs:
           debug: true
 
       - name: Reload nginx on VPS
-        if: steps.check.outputs.should_build == 'true'
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}

@@ -656,6 +656,11 @@ p {
   text-underline-offset: 5px;
 }
 
+.manual-close footer nav {
+  display: flex;
+  gap: 22px;
+}
+
 .manual-running-state {
   position: fixed;
   right: 18px;

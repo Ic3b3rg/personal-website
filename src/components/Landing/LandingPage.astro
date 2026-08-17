@@ -9,52 +9,8 @@ interface Props {
 }
 
 const { copy, alternateLanguageHref } = Astro.props;
-const labels =
-  copy.language === "it"
-    ? {
-        skip: "Vai al contenuto",
-        navigation: "Navigazione principale",
-        home: "Silvio Ceccarini, home",
-        services: "Servizi",
-        edition: "Edizione 2026",
-        from: "Da",
-        definition: "Definizione",
-        to: "A",
-        release: "Rilascio",
-        process: "Processo",
-        projectFlow: "Flusso progetto",
-        projectPath: "Percorso del progetto: analisi, sviluppo e rilascio",
-        projectStages: ["Analisi", "Sviluppo", "Rilascio"],
-        alternateLanguage: "English",
-        cover: "Copertina",
-        team: "Team",
-        method: "Metodo",
-        scope: "Competenze",
-        trust: "Testimonianze",
-        contact: "Contatto",
-      }
-    : {
-        skip: "Skip to content",
-        navigation: "Primary navigation",
-        home: "Silvio Ceccarini, home",
-        services: "Services",
-        edition: "Edition 2026",
-        from: "From",
-        definition: "Definition",
-        to: "To",
-        release: "Release",
-        process: "Process",
-        projectFlow: "Project flow",
-        projectPath: "Project path: analysis, development and release",
-        projectStages: ["Analysis", "Development", "Release"],
-        alternateLanguage: "Italiano",
-        cover: "Cover",
-        team: "Team",
-        method: "Method",
-        scope: "Capabilities",
-        trust: "Recommendations",
-        contact: "Contact",
-      };
+const { labels } = copy;
+const currentYear = new Date().getFullYear();
 ---
 
 <div class="manual" data-landing="manual">
@@ -68,7 +24,11 @@ const labels =
     <nav aria-label={labels.navigation}>
       <a href="#services">{labels.services}</a>
       <a href="#recommendations">{copy.recommendationsTitle}</a>
-      <a href={alternateLanguageHref}>{labels.alternateLanguage}</a>
+      <a
+        href={alternateLanguageHref}
+        hreflang={copy.language === "it" ? "en" : "it"}
+        >{labels.alternateLanguage}</a
+      >
     </nav>
   </header>
 
@@ -78,7 +38,7 @@ const labels =
       </div>
       <div class="manual-cover__edition">
         <span>{copy.role}</span>
-        <span>{labels.edition}</span>
+        <span>{labels.edition} {currentYear}</span>
       </div>
       <div class="manual-cover__feature">
         <h1>{copy.headline}</h1>
@@ -237,10 +197,15 @@ const labels =
         >
       </div>
       <footer>
-        <span>{copy.footerNote}</span>
-        <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <span>Silvio Ceccarini · {copy.footerLocation} · {currentYear}</span>
+        <nav aria-label={labels.social}>
+          <a href={LINKS.linkedin} target="_blank" rel="me noopener noreferrer"
+            >LinkedIn</a
+          >
+          <a href={LINKS.github} target="_blank" rel="me noopener noreferrer"
+            >GitHub</a
+          >
+        </nav>
       </footer>
     </section>
   </main>

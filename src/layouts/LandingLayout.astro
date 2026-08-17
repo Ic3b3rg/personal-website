@@ -10,22 +10,101 @@ interface Props {
 
 const { lang, title, description, canonicalPath } = Astro.props;
 const site = Astro.site ?? new URL(Astro.url.origin);
+const siteUrl = new URL("/", site).toString();
 const canonicalUrl = new URL(canonicalPath, site).toString();
 const englishUrl = new URL("/", site).toString();
 const italianUrl = new URL("/it/", site).toString();
-const imageUrl = new URL("/og-image.png", site).toString();
+const isItalian = lang === "it";
+const locale = isItalian ? "it_IT" : "en_US";
+const alternateLocale = isItalian ? "en_US" : "it_IT";
+const imagePath = isItalian
+  ? "/images/silvio-ceccarini-sviluppatore-software-freelance.png"
+  : "/images/silvio-ceccarini-freelance-software-engineer.png";
+const imageUrl = new URL(imagePath, site).toString();
+const imageAlt = isItalian
+  ? "Silvio Ceccarini, sviluppatore software freelance per app, web e mobile"
+  : "Silvio Ceccarini, freelance software engineer for web and mobile apps";
+const serviceName = isItalian
+  ? "Sviluppo software freelance per app, web e mobile"
+  : "Freelance software development for web and mobile apps";
+const personId = `${siteUrl}#silvio-ceccarini`;
+const websiteId = `${siteUrl}#website`;
+const webpageId = `${canonicalUrl}#webpage`;
+const serviceId = `${canonicalUrl}#software-development-service`;
+const imageId = `${canonicalUrl}#primary-image`;
 const schema = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Silvio Ceccarini",
-  url: englishUrl,
-  image: imageUrl,
-  jobTitle: "Senior Freelance Software Engineer",
-  sameAs: [LINKS.linkedin, LINKS.github],
-  nationality: {
-    "@type": "Country",
-    name: "Italy",
-  },
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": personId,
+      name: "Silvio Ceccarini",
+      url: siteUrl,
+      email: LINKS.email,
+      jobTitle: "Senior Freelance Software Engineer",
+      description,
+      sameAs: [LINKS.linkedin, LINKS.github],
+      knowsAbout: [
+        "Software development",
+        "Web application development",
+        "Mobile application development",
+        "Artificial intelligence integration",
+        "React",
+        "React Native",
+        "Node.js",
+        "PostgreSQL",
+      ],
+      knowsLanguage: ["Italian", "English"],
+      nationality: {
+        "@type": "Country",
+        name: "Italy",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: siteUrl,
+      name: "Silvio Ceccarini",
+      alternateName: "SC",
+      inLanguage: ["en", "it"],
+      publisher: { "@id": personId },
+    },
+    {
+      "@type": "ImageObject",
+      "@id": imageId,
+      url: imageUrl,
+      contentUrl: imageUrl,
+      width: 1200,
+      height: 630,
+      caption: imageAlt,
+    },
+    {
+      "@type": "Service",
+      "@id": serviceId,
+      name: serviceName,
+      description,
+      serviceType: [
+        "Software development",
+        "Web application development",
+        "Mobile application development",
+        "AI integration",
+      ],
+      provider: { "@id": personId },
+      url: canonicalUrl,
+    },
+    {
+      "@type": "WebPage",
+      "@id": webpageId,
+      url: canonicalUrl,
+      name: title,
+      description,
+      inLanguage: lang,
+      isPartOf: { "@id": websiteId },
+      about: { "@id": personId },
+      mainEntity: { "@id": serviceId },
+      primaryImageOfPage: { "@id": imageId },
+    },
+  ],
 };
 ---
 
@@ -35,10 +114,31 @@ const schema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Silvio Ceccarini" />
+    <meta http-equiv="content-language" content={lang} />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta name="theme-color" content="#11110f" />
     <meta name="color-scheme" content="dark" />
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link
+      rel="preload"
+      href="/fonts/CabinetGrotesk-Variable.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Satoshi-Variable.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={englishUrl} />
     <link rel="alternate" hreflang="it" href={italianUrl} />
@@ -46,16 +146,27 @@ const schema = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Silvio Ceccarini" />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:locale:alternate" content={alternateLocale} />
     <meta property="og:image" content={imageUrl} />
-    <meta property="og:locale" content={lang === "it" ? "it_IT" : "en_US"} />
+    <meta property="og:image:secure_url" content={imageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>

@@ -1,30 +1,88 @@
 export type LandingLanguage = "it" | "en";
 
+interface LandingLabels {
+  skip: string;
+  navigation: string;
+  home: string;
+  services: string;
+  edition: string;
+  from: string;
+  definition: string;
+  to: string;
+  release: string;
+  process: string;
+  projectFlow: string;
+  projectPath: string;
+  projectStages: [string, string, string];
+  alternateLanguage: string;
+  cover: string;
+  team: string;
+  method: string;
+  scope: string;
+  trust: string;
+  contact: string;
+  social: string;
+}
+
+interface LandingService {
+  title: string;
+  body: string;
+}
+
+interface LandingRecommendation {
+  quote: string;
+  initials: string;
+}
+
 export interface LandingCopy {
   language: LandingLanguage;
+  labels: LandingLabels;
   role: string;
   headline: string;
   intro: string;
   proof: string;
   book: string;
   email: string;
-  services: Array<{ title: string; body: string }>;
+  services: [LandingService, LandingService];
   approachTitle: string;
   approachBody: string;
   capabilitiesTitle: string;
   capabilitiesBody: string;
   capabilities: string[];
   recommendationsTitle: string;
-  recommendations: Array<{ quote: string; initials: string }>;
+  recommendations: LandingRecommendation[];
   contactTitle: string;
   contactBody: string;
-  footerNote: string;
+  footerLocation: string;
 }
 
 export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   it: {
     language: "it",
-    role: "Senior Freelance Software Engineer",
+    labels: {
+      skip: "Vai al contenuto",
+      navigation: "Navigazione principale",
+      home: "Silvio Ceccarini, home",
+      services: "Servizi",
+      edition: "Edizione",
+      from: "Da",
+      definition: "Definizione",
+      to: "A",
+      release: "Rilascio",
+      process: "Processo",
+      projectFlow: "Flusso progetto",
+      projectPath: "Percorso del progetto: analisi, sviluppo e rilascio",
+      projectStages: ["Analisi", "Sviluppo", "Rilascio"],
+      alternateLanguage: "English",
+      cover: "Copertina",
+      team: "Team",
+      method: "Metodo",
+      scope: "Competenze",
+      trust: "Testimonianze",
+      contact: "Contatto",
+      social: "Profili professionali",
+    },
+    role: "Sviluppatore Software Freelance Senior",
     headline: "Sviluppo app da zero e affianco team web e mobile.",
     intro:
       "Seguo progetti completi e collaboro su prodotti già avviati. Lavoro tra frontend, backend e mobile, adattandomi allo stack e al modo di lavorare del team.",
@@ -34,20 +92,20 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     email: "Scrivimi",
     services: [
       {
-        title: "Sviluppo completo",
+        title: "Sviluppo app end-to-end",
         body: "Realizzo applicazioni partendo da un’esigenza concreta e seguo il progetto dalla definizione tecnica al rilascio.",
       },
       {
-        title: "Supporto al team",
+        title: "Supporto a team web e mobile",
         body: "Entro in progetti web e mobile già avviati, lavoro con lo stack e il processo esistenti e mi occupo dello sviluppo insieme al team.",
       },
     ],
     approachTitle: "Come lavoro",
     approachBody:
-      "Mentre sviluppo, osservo anche il prodotto e la codebase. Quando vedo margini di miglioramento — nelle performance, nella manutenzione, nelle build o nel processo — li porto all’attenzione del team e li affronto quando sono utili al progetto.",
-    capabilitiesTitle: "Competenze",
+      "Mentre sviluppo, osservo anche il prodotto e la codebase. Quando vedo margini di miglioramento nelle performance, nella manutenzione, nelle build o nel processo, li porto all’attenzione del team e li affronto quando sono utili al progetto.",
+    capabilitiesTitle: "Competenze e tecnologie",
     capabilitiesBody:
-      "Lavoro tra frontend, backend e mobile. Mi occupo anche di database, deploy e integrazioni AI quando il progetto lo richiede.",
+      "Lavoro con React, Next.js e Angular sul frontend; Node.js, NestJS, Fastify, PostgreSQL ed Elixir sul backend. Sviluppo app React Native e integro servizi come Twilio e funzionalità AI quando servono al prodotto.",
     capabilities: [
       "Frontend",
       "Backend",
@@ -76,10 +134,33 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     contactTitle: "Possiamo lavorare insieme.",
     contactBody:
       "Se stai sviluppando una nuova applicazione o cerchi supporto per un prodotto già avviato, possiamo parlarne.",
-    footerNote: "Silvio Ceccarini · Italia · 2026",
+    footerLocation: "Italia",
   },
   en: {
     language: "en",
+    labels: {
+      skip: "Skip to content",
+      navigation: "Primary navigation",
+      home: "Silvio Ceccarini, home",
+      services: "Services",
+      edition: "Edition",
+      from: "From",
+      definition: "Definition",
+      to: "To",
+      release: "Release",
+      process: "Process",
+      projectFlow: "Project flow",
+      projectPath: "Project path: analysis, development and release",
+      projectStages: ["Analysis", "Development", "Release"],
+      alternateLanguage: "Italiano",
+      cover: "Cover",
+      team: "Team",
+      method: "Method",
+      scope: "Capabilities",
+      trust: "Recommendations",
+      contact: "Contact",
+      social: "Professional profiles",
+    },
     role: "Senior Freelance Software Engineer",
     headline: "I build apps from scratch and support web and mobile teams.",
     intro:
@@ -90,20 +171,20 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     email: "Email me",
     services: [
       {
-        title: "End-to-end development",
+        title: "End-to-end app development",
         body: "I turn a concrete need into a working application, taking the project from technical definition through release.",
       },
       {
-        title: "Team support",
+        title: "Web and mobile team support",
         body: "I join established web and mobile projects, work within the existing stack and process, and contribute alongside the team.",
       },
     ],
     approachTitle: "How I work",
     approachBody:
       "While I’m building, I also pay attention to the product and codebase. When I find practical improvements to performance, maintainability, builds or the development process, I raise them with the team and address them when they serve the project.",
-    capabilitiesTitle: "Capabilities",
+    capabilitiesTitle: "Skills and technologies",
     capabilitiesBody:
-      "I work across frontend, backend and mobile. I also handle databases, deployment and AI integrations when the project calls for them.",
+      "I work with React, Next.js and Angular on the frontend; Node.js, NestJS, Fastify, PostgreSQL and Elixir on the backend. I also build React Native apps and integrate services such as Twilio and AI features when they support the product.",
     capabilities: [
       "Frontend",
       "Backend",
@@ -131,6 +212,6 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     contactTitle: "Let’s work together.",
     contactBody:
       "If you’re building a new application or need support on an established product, let’s talk.",
-    footerNote: "Silvio Ceccarini · Italy · 2026",
+    footerLocation: "Italy",
   },
 };
