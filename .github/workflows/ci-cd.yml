@@ -30,24 +30,37 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Type check
+        run: npx tsc --noEmit
+
       - name: Build project
         run: npm run build
 
-      - name: Deploy to VPS (via SCP)
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "dist/"
-          target: "/var/www/personal-website"
-          overwrite: true
-          debug: true
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
 
-      - name: Reload nginx on VPS
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: sudo systemctl reload nginx
+      - name: Configure SSH
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          install -m 700 -d "$RUNNER_TEMP/deploy-ssh"
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/deploy-ssh/key"
+          chmod 600 "$RUNNER_TEMP/deploy-ssh/key"
+          ssh-keyscan -H "$SSH_HOST" > "$RUNNER_TEMP/deploy-ssh/known_hosts"
+
+      - name: Deploy and reload nginx
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          tar -C dist -czf - . | ssh \
+            -i "$RUNNER_TEMP/deploy-ssh/key" \
+            -o IdentitiesOnly=yes \
+            -o UserKnownHostsFile="$RUNNER_TEMP/deploy-ssh/known_hosts" \
+            "$SSH_USER@$SSH_HOST" \
+            'tar -xzf - -C /var/www/personal-website && sudo systemctl reload nginx'
+
+      - name: Remove temporary SSH files
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/deploy-ssh"
