@@ -94,8 +94,6 @@ export interface LandingCopy {
   contactParagraphs: string[];
   faqTitle: string;
   faqs: LandingFaq[];
-  footerPositioning: string;
-  footerServices: string[];
   footerLocation: string;
 }
 
@@ -313,14 +311,6 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
           "Partiamo da una call per capire a che punto siete, cosa state costruendo e di quale tipo di supporto avete bisogno.",
       },
     ],
-    footerPositioning:
-      "Sviluppatore software freelance senior per startup e aziende.",
-    footerServices: [
-      "Sviluppo software custom",
-      "Sviluppo app end-to-end",
-      "Supporto a team web e mobile",
-      "Consulenza software",
-    ],
     footerLocation: "Italia",
   },
   en: {
@@ -534,14 +524,6 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
         answer:
           "We start with a call to understand where you are, what you are building and what kind of support you need.",
       },
-    ],
-    footerPositioning:
-      "Senior freelance software engineer for startups and companies.",
-    footerServices: [
-      "Custom software development",
-      "End-to-end app development",
-      "Web and mobile team support",
-      "Software consulting",
     ],
     footerLocation: "Italy",
   },

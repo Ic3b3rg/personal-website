@@ -1047,37 +1047,6 @@ p {
   border-bottom: 1px solid var(--landing-line);
 }
 
-.manual-footer__positioning {
-  padding: clamp(60px, 9vw, 112px) clamp(24px, 7vw, 92px);
-}
-
-.manual-footer__positioning > p {
-  max-width: 24ch;
-  color: var(--landing-warm-white);
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-size: clamp(1.8rem, 4vw, 3.6rem);
-  font-weight: 550;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-}
-
-.manual-footer__positioning ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 0;
-  margin: 48px 0 0;
-  padding: 0;
-  color: var(--landing-muted);
-  font-size: 0.9rem;
-  list-style: none;
-}
-
-.manual-footer__positioning li:not(:last-child)::after {
-  margin: 0 12px;
-  color: var(--landing-orange);
-  content: "·";
-}
-
 .manual-footer__meta {
   display: flex;
   min-height: 86px;
@@ -1457,20 +1426,6 @@ p {
   .manual-faq-list details > p {
     padding: 0 22px 36px 66px;
     font-size: 1rem;
-  }
-
-  .manual-footer__positioning {
-    padding: 68px 22px 72px;
-  }
-
-  .manual-footer__positioning ul {
-    display: grid;
-    gap: 10px;
-    margin-top: 36px;
-  }
-
-  .manual-footer__positioning li:not(:last-child)::after {
-    display: none;
   }
 
   .manual-footer__meta {

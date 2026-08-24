@@ -15,6 +15,10 @@ function count(html, pattern) {
   return html.match(pattern)?.length ?? 0;
 }
 
+function bodyOf(html) {
+  return html.match(/<body(?:\s[^>]*)?>([\s\S]*)<\/body>/)?.[1] ?? "";
+}
+
 test("Italian page renders the approved semantic content structure", () => {
   assert.equal(count(italianHtml, /<h1(?:\s|>)/g), 1);
   assert.ok(count(italianHtml, /<h2(?:\s|>)/g) >= 8);
@@ -69,6 +73,17 @@ test("Both routes expose the approved SEO metadata", () => {
   );
   assert.doesNotMatch(italianHtml, /6 anni di esperienza/);
   assert.doesNotMatch(englishHtml, /6 years of experience/);
+});
+
+test("SEO positioning copy stays out of the visible page content", () => {
+  assert.doesNotMatch(
+    bodyOf(italianHtml),
+    /Sviluppatore software freelance senior per startup e aziende\./,
+  );
+  assert.doesNotMatch(
+    bodyOf(englishHtml),
+    /Senior freelance software engineer for startups and companies\./,
+  );
 });
 
 test("Visible FAQs are also represented as structured data", () => {
