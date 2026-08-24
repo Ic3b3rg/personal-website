@@ -1,0 +1,23 @@
+---
+import type { LandingCopy } from "./copy";
+
+interface Props {
+  faqs: LandingCopy["faqs"];
+}
+
+const { faqs } = Astro.props;
+---
+
+<div class="manual-faq-list">
+  {
+    faqs.map((faq, index) => (
+      <details>
+        <summary>
+          <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          <strong>{faq.question}</strong>
+        </summary>
+        <p>{faq.answer}</p>
+      </details>
+    ))
+  }
+</div>

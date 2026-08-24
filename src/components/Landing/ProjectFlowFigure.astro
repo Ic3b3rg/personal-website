@@ -1,0 +1,73 @@
+---
+interface Props {
+  flowLabel: string;
+  pathLabel: string;
+  stages: [string, string, string];
+}
+
+const { flowLabel, pathLabel, stages } = Astro.props;
+---
+
+<div
+  class="manual-project-figure"
+  role="img"
+  aria-label={pathLabel}
+  data-project-figure
+>
+  <div class="manual-project-figure__meta" aria-hidden="true">
+    <span>{flowLabel}</span>
+  </div>
+  <svg
+    class="manual-project-figure__drawing"
+    viewBox="0 0 410 446"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      data-project-path
+      pathLength="1"
+      d="M18 354 L92 302 L164 326 L286 116 L394 84"></path>
+    <path data-project-path pathLength="1" d="M20 392 H130 L218 258 H390"
+    ></path>
+  </svg>
+  <div class="manual-project-ribbon" aria-hidden="true">
+    <span class="manual-project-ribbon__front" data-project-plane></span>
+    <span class="manual-project-ribbon__fold" data-project-plane></span>
+    <span class="manual-project-ribbon__back" data-project-plane></span>
+    <ol class="manual-project-ribbon__stages">
+      {stages.map((stage) => <li data-project-stage>{stage}</li>)}
+    </ol>
+  </div>
+  <span class="manual-project-figure__axis" aria-hidden="true" data-project-axis
+  ></span>
+</div>
+
+<div
+  class="manual-project-compact"
+  role="img"
+  aria-label={pathLabel}
+  data-project-compact
+>
+  <div class="manual-project-compact__meta" aria-hidden="true">
+    <span>{flowLabel}</span>
+  </div>
+  <svg viewBox="0 0 360 82" aria-hidden="true">
+    <path
+      class="manual-project-compact__plane"
+      data-compact-plane
+      d="M74 68 L128 24 H230 L286 68 H226 L205 48 H154 L134 68 Z"></path>
+    <path
+      class="manual-project-compact__path"
+      data-compact-path
+      pathLength="1"
+      d="M8 68 H92 L132 36 H226 L266 68 H352"></path>
+    <g class="manual-project-compact__nodes">
+      <circle data-compact-node cx="46" cy="68" r="6"></circle>
+      <circle data-compact-node cx="180" cy="36" r="6"></circle>
+      <circle data-compact-node cx="314" cy="68" r="6"></circle>
+    </g>
+  </svg>
+  <ol class="manual-project-compact__stages" aria-hidden="true">
+    {stages.map((stage) => <li>{stage}</li>)}
+  </ol>
+</div>

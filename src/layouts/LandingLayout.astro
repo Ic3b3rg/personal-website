@@ -6,9 +6,13 @@ interface Props {
   title: string;
   description: string;
   canonicalPath: "/" | "/it/";
+  faqs: ReadonlyArray<{
+    question: string;
+    answer: string;
+  }>;
 }
 
-const { lang, title, description, canonicalPath } = Astro.props;
+const { lang, title, description, canonicalPath, faqs } = Astro.props;
 const site = Astro.site ?? new URL(Astro.url.origin);
 const siteUrl = new URL("/", site).toString();
 const canonicalUrl = new URL(canonicalPath, site).toString();
@@ -32,6 +36,7 @@ const websiteId = `${siteUrl}#website`;
 const webpageId = `${canonicalUrl}#webpage`;
 const serviceId = `${canonicalUrl}#software-development-service`;
 const imageId = `${canonicalUrl}#primary-image`;
+const faqId = `${canonicalUrl}#faq`;
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -102,7 +107,23 @@ const schema = {
       isPartOf: { "@id": websiteId },
       about: { "@id": personId },
       mainEntity: { "@id": serviceId },
+      hasPart: { "@id": faqId },
       primaryImageOfPage: { "@id": imageId },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": faqId,
+      url: faqId,
+      inLanguage: lang,
+      isPartOf: { "@id": webpageId },
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
     },
   ],
 };

@@ -1,0 +1,20 @@
+---
+import { LINKS } from "../../lib/constants";
+
+interface Props {
+  book: string;
+  email: string;
+}
+
+const { book, email } = Astro.props;
+---
+
+<div class="manual-actions">
+  <a
+    class="landing-button"
+    href={LINKS.calDotCom}
+    target="_blank"
+    rel="noopener noreferrer">{book}</a
+  >
+  <a class="landing-text-link" href={`mailto:${LINKS.email}`}>{email}</a>
+</div>

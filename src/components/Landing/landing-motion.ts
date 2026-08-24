@@ -161,19 +161,6 @@ function setupTeamFlow() {
     teamFlow,
     () => {
       const nodes = teamFlow.querySelectorAll<HTMLElement>("[data-team-node]");
-      const links = teamFlow.querySelectorAll<HTMLElement>("[data-team-link]");
-
-      links.forEach((link, index) => {
-        animate(
-          link,
-          { transform: ["scaleX(0)", "scaleX(1)"] },
-          {
-            duration: 0.52,
-            delay: 0.08 + index * 0.18,
-            ease: MOTION_EASE,
-          },
-        );
-      });
 
       nodes.forEach((node, index) => {
         animate(

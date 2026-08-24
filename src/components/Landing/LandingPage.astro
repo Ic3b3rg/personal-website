@@ -1,5 +1,10 @@
 ---
 import { LINKS } from "../../lib/constants";
+import ChapterHeader from "./ChapterHeader.astro";
+import FaqList from "./FaqList.astro";
+import LandingActions from "./LandingActions.astro";
+import ProjectFlowFigure from "./ProjectFlowFigure.astro";
+import ProjectShowcase from "./ProjectShowcase.astro";
 import type { LandingCopy } from "./copy";
 import "./landing.css";
 
@@ -23,10 +28,13 @@ const currentYear = new Date().getFullYear();
     </a>
     <nav aria-label={labels.navigation}>
       <a href="#services">{labels.services}</a>
-      <a href="#recommendations">{copy.recommendationsTitle}</a>
+      <a href="#projects">{labels.projects}</a>
+      <a href="#recommendations">{labels.recommendations}</a>
+      <a href="#faq">{labels.faq}</a>
       <a
         href={alternateLanguageHref}
         hreflang={copy.language === "it" ? "en" : "it"}
+        lang={copy.language === "it" ? "en" : "it"}
         >{labels.alternateLanguage}</a
       >
     </nav>
@@ -36,106 +44,45 @@ const currentYear = new Date().getFullYear();
     <section class="manual-cover" id="top" data-manual-chapter={labels.cover}>
       <div class="manual-register manual-register--top" aria-hidden="true">
       </div>
-      <div class="manual-cover__edition">
-        <span>{copy.role}</span>
-        <span>{labels.edition} {currentYear}</span>
-      </div>
+      <p class="manual-cover__role">{copy.role}</p>
       <div class="manual-cover__feature">
         <h1>{copy.headline}</h1>
-        <div
-          class="manual-project-figure"
-          role="img"
-          aria-label={labels.projectPath}
-          data-project-figure
-        >
-          <div class="manual-project-figure__meta" aria-hidden="true">
-            <span>{labels.projectFlow}</span>
-            <span>03 / 03</span>
-          </div>
-          <svg
-            class="manual-project-figure__drawing"
-            viewBox="0 0 410 446"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              data-project-path
-              pathLength="1"
-              d="M18 354 L92 302 L164 326 L286 116 L394 84"></path>
-            <path
-              data-project-path
-              pathLength="1"
-              d="M20 392 H130 L218 258 H390"></path>
-          </svg>
-          <div class="manual-project-ribbon" aria-hidden="true">
-            <span class="manual-project-ribbon__front" data-project-plane
-            ></span>
-            <span class="manual-project-ribbon__fold" data-project-plane></span>
-            <span class="manual-project-ribbon__back" data-project-plane></span>
-            <ol class="manual-project-ribbon__stages">
-              {
-                labels.projectStages.map((stage) => (
-                  <li data-project-stage>{stage}</li>
-                ))
-              }
-            </ol>
-          </div>
-          <span
-            class="manual-project-figure__axis"
-            aria-hidden="true"
-            data-project-axis></span>
-        </div>
-
-        <div
-          class="manual-project-compact"
-          role="img"
-          aria-label={labels.projectPath}
-          data-project-compact
-        >
-          <div class="manual-project-compact__meta" aria-hidden="true">
-            <span>{labels.projectFlow}</span>
-            <span>01—03</span>
-          </div>
-          <svg viewBox="0 0 360 82" aria-hidden="true">
-            <path
-              class="manual-project-compact__plane"
-              data-compact-plane
-              d="M74 68 L128 24 H230 L286 68 H226 L205 48 H154 L134 68 Z"
-            ></path>
-            <path
-              class="manual-project-compact__path"
-              data-compact-path
-              pathLength="1"
-              d="M8 68 H92 L132 36 H226 L266 68 H352"></path>
-            <g class="manual-project-compact__nodes">
-              <circle data-compact-node cx="46" cy="68" r="6"></circle>
-              <circle data-compact-node cx="180" cy="36" r="6"></circle>
-              <circle data-compact-node cx="314" cy="68" r="6"></circle>
-            </g>
-          </svg>
-          <ol class="manual-project-compact__stages" aria-hidden="true">
-            {labels.projectStages.map((stage) => <li>{stage}</li>)}
-          </ol>
-        </div>
+        <ProjectFlowFigure
+          flowLabel={labels.projectFlow}
+          pathLabel={labels.projectPath}
+          stages={labels.projectStages}
+        />
       </div>
       <div class="manual-cover__footer">
-        <p>{copy.intro}</p>
-        <div>
+        <div class="manual-copy-stack manual-copy-stack--hero">
+          {copy.heroBody.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="manual-cover__conversion">
           <p class="manual-proof">{copy.proof}</p>
-          <div class="manual-actions">
-            <a
-              class="landing-button landing-button--primary"
-              href={LINKS.calDotCom}
-              target="_blank"
-              rel="noopener noreferrer">{copy.book}</a
-            >
-            <a class="landing-text-link" href={`mailto:${LINKS.email}`}
-              >{copy.email}</a
-            >
-          </div>
+          <LandingActions book={copy.book} email={copy.email} />
         </div>
       </div>
+      <div class="manual-flow-copy">
+        <h2>{copy.flowTitle}</h2>
+        <p>{copy.flowBody}</p>
+      </div>
       <div class="manual-register manual-register--bottom" aria-hidden="true">
+      </div>
+    </section>
+
+    <section
+      class="manual-profile"
+      aria-label={labels.profile}
+      data-manual-chapter={labels.profile}
+    >
+      <div class="manual-profile__situations">
+        {copy.introduction.slice(0, 3).map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <div class="manual-profile__method">
+        <div class="manual-copy-stack">
+          {copy.introduction.slice(3).map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <LandingActions book={copy.book} email={copy.email} />
       </div>
     </section>
 
@@ -144,12 +91,15 @@ const currentYear = new Date().getFullYear();
       id="services"
       data-manual-chapter={`01 / ${labels.services}`}
     >
-      <header class="manual-chapter__header">
-        <span>01</span>
-        <h2>{copy.services[0].title}</h2>
-      </header>
+      <ChapterHeader
+        index="01"
+        title={copy.services[0].title}
+        subtitle={copy.services[0].subtitle}
+      />
       <div class="manual-chapter__body manual-chapter__body--service">
-        <p>{copy.services[0].body}</p>
+        <div class="manual-copy-stack manual-copy-stack--large">
+          {copy.services[0].paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
         <aside>
           <span>{labels.from}</span>
           <strong>{labels.definition}</strong>
@@ -160,51 +110,24 @@ const currentYear = new Date().getFullYear();
     </section>
 
     <section class="manual-chapter" data-manual-chapter={`02 / ${labels.team}`}>
-      <header class="manual-chapter__header">
-        <span>02</span>
-        <h2>{copy.services[1].title}</h2>
-      </header>
+      <ChapterHeader
+        index="02"
+        title={copy.services[1].title}
+        subtitle={copy.services[1].subtitle}
+      />
       <div class="manual-chapter__body manual-chapter__body--team">
-        <p>{copy.services[1].body}</p>
-        <div class="manual-team-line" aria-hidden="true" data-team-flow>
-          <span data-team-node><b>01</b>Stack</span>
-          <i data-team-link></i>
-          <span data-team-node><b>02</b>{labels.process}</span>
-          <i data-team-link></i>
-          <span data-team-node><b>03</b>Team</span>
+        <div class="manual-copy-stack manual-copy-stack--large">
+          {copy.services[1].paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>
-      </div>
-    </section>
-
-    <section
-      class="manual-chapter manual-chapter--orange"
-      data-manual-chapter={`03 / ${labels.method}`}
-    >
-      <header class="manual-chapter__header">
-        <span>03</span>
-        <h2>{copy.approachTitle}</h2>
-      </header>
-      <div class="manual-chapter__body">
-        <p>{copy.approachBody}</p>
-      </div>
-    </section>
-
-    <section
-      class="manual-chapter"
-      data-manual-chapter={`04 / ${labels.scope}`}
-    >
-      <header class="manual-chapter__header">
-        <span>04</span>
-        <h2>{copy.capabilitiesTitle}</h2>
-      </header>
-      <div class="manual-chapter__body manual-chapter__body--capabilities">
-        <p>{copy.capabilitiesBody}</p>
-        <ol data-capabilities-list>
+        <ol class="manual-team-spec" data-team-flow>
           {
-            copy.capabilities.map((capability, index) => (
-              <li data-capability>
+            copy.services[1].pillars?.map((pillar, index) => (
+              <li data-team-node>
                 <span>{String(index + 1).padStart(2, "0")}</span>
-                {capability}
+                <div>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.body}</p>
+                </div>
               </li>
             ))
           }
@@ -213,14 +136,65 @@ const currentYear = new Date().getFullYear();
     </section>
 
     <section
+      class="manual-chapter manual-chapter--orange"
+      data-manual-chapter={`03 / ${labels.method}`}
+    >
+      <ChapterHeader
+        index="03"
+        title={copy.approachTitle}
+        subtitle={copy.approachSubtitle}
+      />
+      <div class="manual-chapter__body manual-chapter__body--narrative">
+        <div class="manual-copy-stack manual-copy-stack--large">
+          {copy.approachParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="manual-chapter"
+      data-manual-chapter={`04 / ${labels.scope}`}
+    >
+      <ChapterHeader
+        index="04"
+        title={copy.capabilitiesTitle}
+        subtitle={copy.capabilitiesSubtitle}
+      />
+      <div class="manual-chapter__body manual-chapter__body--capabilities">
+        <div class="manual-copy-stack">
+          {copy.capabilitiesParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <ol data-capabilities-list>
+          {
+            copy.capabilityItems.map((capability, index) => (
+              <li data-capability>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{capability.title}</h3>
+                  <p>{capability.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section
+      class="manual-chapter manual-work"
+      id="projects"
+      data-manual-chapter={`05 / ${labels.work}`}
+    >
+      <ChapterHeader index="05" title={copy.projectsTitle} />
+      <ProjectShowcase projects={copy.projects} />
+    </section>
+
+    <section
       class="manual-chapter manual-recommendations"
       id="recommendations"
-      data-manual-chapter={`05 / ${labels.trust}`}
+      data-manual-chapter={`06 / ${labels.trust}`}
     >
-      <header class="manual-chapter__header">
-        <span>05</span>
-        <h2>{copy.recommendationsTitle}</h2>
-      </header>
+      <ChapterHeader index="06" title={copy.recommendationsTitle} />
       <div class="manual-quotes">
         {
           copy.recommendations.map((recommendation) => (
@@ -234,38 +208,57 @@ const currentYear = new Date().getFullYear();
     </section>
 
     <section
-      class="manual-close"
-      data-manual-chapter={`06 / ${labels.contact}`}
+      class="manual-chapter manual-contact"
+      id="contact"
+      data-manual-chapter={`07 / ${labels.contact}`}
     >
-      <div class="manual-close__index">06 / {labels.contact}</div>
-      <h2>{copy.contactTitle}</h2>
-      <p>{copy.contactBody}</p>
-      <div class="manual-actions">
-        <a
-          class="landing-button landing-button--primary"
-          href={LINKS.calDotCom}
-          target="_blank"
-          rel="noopener noreferrer">{copy.book}</a
-        >
-        <a class="landing-text-link" href={`mailto:${LINKS.email}`}
-          >{copy.email}</a
-        >
+      <header class="manual-contact__header">
+        <span aria-hidden="true">07</span>
+        <div>
+          <p>{copy.contactPrompt}</p>
+          <h2>{copy.contactLead}</h2>
+          <h3>{copy.contactTitle}</h3>
+        </div>
+      </header>
+      <div class="manual-contact__body">
+        <div class="manual-copy-stack manual-copy-stack--large">
+          {copy.contactParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <LandingActions book={copy.book} email={copy.email} />
       </div>
-      <footer>
-        <span>Silvio Ceccarini · {copy.footerLocation} · {currentYear}</span>
-        <nav aria-label={labels.social}>
-          <a href={LINKS.linkedin} target="_blank" rel="me noopener noreferrer"
-            >LinkedIn</a
-          >
-          <a href={LINKS.github} target="_blank" rel="me noopener noreferrer"
-            >GitHub</a
-          >
-        </nav>
-      </footer>
+    </section>
+
+    <section
+      class="manual-chapter manual-faq"
+      id="faq"
+      data-manual-chapter={`08 / ${labels.questions}`}
+    >
+      <ChapterHeader index="08" title={copy.faqTitle} />
+      <FaqList faqs={copy.faqs} />
     </section>
   </main>
 
-  <div class="manual-running-state" aria-live="polite" data-manual-state>
+  <footer class="manual-footer">
+    <div class="manual-footer__positioning">
+      <p>{copy.footerPositioning}</p>
+      <ul>
+        {copy.footerServices.map((service) => <li>{service}</li>)}
+      </ul>
+    </div>
+    <div class="manual-footer__meta">
+      <span>Silvio Ceccarini · {copy.footerLocation} · {currentYear}</span>
+      <nav aria-label={labels.social}>
+        <a href={LINKS.linkedin} target="_blank" rel="me noopener noreferrer"
+          >LinkedIn</a
+        >
+        <a href={LINKS.github} target="_blank" rel="me noopener noreferrer"
+          >GitHub</a
+        >
+      </nav>
+    </div>
+  </footer>
+
+  <div class="manual-running-state" aria-hidden="true" data-manual-state>
     {labels.cover}
   </div>
 </div>
