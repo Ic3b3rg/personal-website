@@ -23,7 +23,14 @@ const currentYear = new Date().getFullYear();
 
   <header class="manual-header">
     <a href="#top" class="manual-mark" aria-label={labels.home}>
-      <span>SC</span>
+      <img
+        class="manual-mark__avatar"
+        src="/favicon.ico"
+        alt=""
+        width="38"
+        height="38"
+        decoding="async"
+      />
       <strong>Silvio Ceccarini</strong>
     </a>
     <nav aria-label={labels.navigation}>
@@ -63,7 +70,30 @@ const currentYear = new Date().getFullYear();
         </div>
       </div>
       <div class="manual-flow-copy">
-        <h2>{copy.flowTitle}</h2>
+        <h2
+          class="manual-flow-copy__title"
+          aria-label={copy.flowTitle}
+          data-flow-title
+        >
+          <span data-flow-stage>{labels.projectStages[0]}</span>
+          {
+            labels.projectStages.slice(1).map((stage) => (
+              <span class="manual-flow-copy__step">
+                <svg
+                  class="manual-flow-connector"
+                  viewBox="0 0 48 12"
+                  aria-hidden="true"
+                  focusable="false"
+                  data-flow-connector
+                >
+                  <circle cx="2" cy="6" r="1.5" />
+                  <path d="M5 6H46M40 1.5 47 6l-7 4.5" />
+                </svg>
+                <span data-flow-stage>{stage}</span>
+              </span>
+            ))
+          }
+        </h2>
         <p>{copy.flowBody}</p>
       </div>
       <div class="manual-register manual-register--bottom" aria-hidden="true">

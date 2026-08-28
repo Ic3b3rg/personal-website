@@ -175,17 +175,12 @@ p {
   text-decoration: none;
 }
 
-.manual-mark span {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid var(--landing-orange);
-  border-radius: 50%;
-  color: var(--landing-orange);
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
+.manual-mark__avatar {
+  display: block;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .manual-mark strong {
@@ -489,7 +484,7 @@ p {
 
 .manual-flow-copy {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 1.2fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
   gap: clamp(28px, 6vw, 80px);
   padding: 30px 0 34px;
   border-top: 1px solid var(--landing-line);
@@ -500,6 +495,40 @@ p {
   font-size: clamp(1.35rem, 2.5vw, 2.1rem);
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+.manual-flow-copy__title,
+.manual-flow-copy__step {
+  display: flex;
+  align-items: center;
+}
+
+.manual-flow-copy__title {
+  flex-wrap: wrap;
+  gap: 8px clamp(10px, 1.2vw, 16px);
+}
+
+.manual-flow-copy__step {
+  gap: clamp(8px, 1vw, 13px);
+  white-space: nowrap;
+}
+
+.manual-flow-connector {
+  display: block;
+  width: clamp(24px, 3vw, 48px);
+  height: 12px;
+  flex: 0 1 auto;
+  overflow: visible;
+  fill: currentcolor;
+  stroke: currentcolor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.25;
+}
+
+.manual-flow-connector path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
 }
 
 .manual-flow-copy p {
@@ -849,8 +878,9 @@ p {
   display: block;
   width: min(100%, 190px);
   height: 130px;
+  margin-inline: auto;
   object-fit: contain;
-  object-position: left center;
+  object-position: center;
 }
 
 .manual-project__content {
@@ -1254,6 +1284,8 @@ p {
   .manual-project__identity img {
     width: 150px;
     height: 94px;
+    margin-right: 0;
+    margin-left: auto;
     object-position: right center;
   }
 
@@ -1305,6 +1337,20 @@ p {
     grid-template-columns: 1fr;
     gap: 12px;
     padding: 26px 0 30px;
+  }
+
+  .manual-flow-copy .manual-flow-copy__title {
+    flex-wrap: nowrap;
+    gap: 6px;
+    font-size: 1rem;
+  }
+
+  .manual-flow-copy__step {
+    gap: 6px;
+  }
+
+  .manual-flow-connector {
+    width: 18px;
   }
 
   .manual-register--top {

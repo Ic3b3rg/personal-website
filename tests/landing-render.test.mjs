@@ -36,6 +36,29 @@ test("Italian page removes obsolete editorial counters", () => {
   assert.match(italianHtml, /Analisi → Sviluppo → Rilascio/);
 });
 
+test("Brand and workflow render their visual assets accessibly", () => {
+  const pages = [
+    [italianHtml, "Analisi → Sviluppo → Rilascio"],
+    [englishHtml, "Analysis → Development → Release"],
+  ];
+
+  for (const [html, flowTitle] of pages) {
+    assert.match(
+      html,
+      /<a[^>]*class="manual-mark"[^>]*>[\s\S]*?<img[^>]*class="manual-mark__avatar"[^>]*src="\/favicon\.ico"/,
+    );
+
+    const renderedFlowTitle = html.match(
+      /<h2[^>]*data-flow-title[^>]*>[\s\S]*?<\/h2>/,
+    )?.[0];
+
+    assert.ok(renderedFlowTitle);
+    assert.match(renderedFlowTitle, new RegExp(`aria-label="${flowTitle}"`));
+    assert.equal(count(renderedFlowTitle, /data-flow-stage/g), 3);
+    assert.equal(count(renderedFlowTitle, /data-flow-connector/g), 2);
+  }
+});
+
 test("Project evidence and external destinations render on both languages", () => {
   for (const html of [italianHtml, englishHtml]) {
     assert.match(html, /LiberiPro/);
