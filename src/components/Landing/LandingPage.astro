@@ -31,7 +31,6 @@ const currentYear = new Date().getFullYear();
         height="38"
         decoding="async"
       />
-      <strong>Silvio Ceccarini</strong>
     </a>
     <nav aria-label={labels.navigation}>
       <a href="#services">{labels.services}</a>
@@ -60,7 +59,13 @@ const currentYear = new Date().getFullYear();
       </div>
       <p class="manual-cover__role">{copy.role}</p>
       <div class="manual-cover__feature">
-        <h1>{copy.headline}</h1>
+        <div class="manual-cover__pitch">
+          <h1>{copy.headline}</h1>
+          <div class="manual-cover__conversion">
+            <p class="manual-proof">{copy.proof}</p>
+            <LandingActions book={copy.book} email={copy.email} />
+          </div>
+        </div>
         <ProjectFlowFigure
           flowLabel={labels.projectFlow}
           pathLabel={labels.projectPath}
@@ -68,12 +73,13 @@ const currentYear = new Date().getFullYear();
         />
       </div>
       <div class="manual-cover__footer">
-        <div class="manual-copy-stack manual-copy-stack--hero">
-          {copy.heroBody.map((paragraph) => <p>{paragraph}</p>)}
+        <div
+          class="manual-copy-stack manual-copy-stack--hero manual-cover__lead"
+        >
+          <p>{copy.heroBody[0]}</p>
         </div>
-        <div class="manual-cover__conversion">
-          <p class="manual-proof">{copy.proof}</p>
-          <LandingActions book={copy.book} email={copy.email} />
+        <div class="manual-copy-stack manual-cover__detail">
+          {copy.heroBody.slice(1).map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
       <div class="manual-flow-copy">
@@ -116,10 +122,12 @@ const currentYear = new Date().getFullYear();
         {copy.introduction.slice(0, 3).map((paragraph) => <p>{paragraph}</p>)}
       </div>
       <div class="manual-profile__method">
-        <div class="manual-copy-stack">
-          {copy.introduction.slice(3).map((paragraph) => <p>{paragraph}</p>)}
+        <div class="manual-copy-stack manual-profile__method-lead">
+          {copy.introduction.slice(3, 5).map((paragraph) => <p>{paragraph}</p>)}
         </div>
-        <LandingActions book={copy.book} email={copy.email} />
+        <div class="manual-copy-stack manual-profile__method-detail">
+          {copy.introduction.slice(5).map((paragraph) => <p>{paragraph}</p>)}
+        </div>
       </div>
     </section>
 

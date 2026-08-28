@@ -183,10 +183,6 @@ p {
   object-fit: contain;
 }
 
-.manual-mark strong {
-  font-size: 0.86rem;
-}
-
 .manual-header nav {
   display: flex;
   align-items: center;
@@ -257,6 +253,13 @@ p {
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
   padding: clamp(48px, 8vw, 96px) 0;
+}
+
+.manual-cover__pitch {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .manual-cover h1 {
@@ -429,7 +432,7 @@ p {
 }
 
 .manual-cover__conversion {
-  padding-top: 4px;
+  margin-top: clamp(28px, 4vw, 44px);
 }
 
 .manual-proof {
@@ -468,6 +471,11 @@ p {
   font-size: clamp(1.25rem, 2.1vw, 1.75rem);
   letter-spacing: -0.015em;
   line-height: 1.42;
+}
+
+.manual-cover__detail {
+  max-width: 56ch;
+  justify-self: end;
 }
 
 .manual-copy-stack--large {
@@ -641,7 +649,7 @@ p {
   border-top: 1px solid var(--landing-line);
 }
 
-.manual-profile__method .manual-copy-stack p:first-child {
+.manual-profile__method-lead p:first-child {
   color: var(--landing-orange);
   font-family: "Cabinet Grotesk", sans-serif;
   font-size: clamp(1.7rem, 3vw, 2.8rem);
@@ -1157,6 +1165,10 @@ p {
     padding-left: clamp(28px, 9vw, 80px);
   }
 
+  .manual-cover__detail {
+    justify-self: start;
+  }
+
   .manual-project {
     grid-template-columns: minmax(230px, 0.65fr) minmax(0, 1.35fr);
   }
@@ -1173,10 +1185,6 @@ p {
 }
 
 @media (max-width: 720px) {
-  .manual-mark strong {
-    display: none;
-  }
-
   .manual-header nav a:nth-child(-n + 3) {
     display: none;
   }

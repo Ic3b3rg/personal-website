@@ -59,6 +59,45 @@ test("Brand and workflow render their visual assets accessibly", () => {
   }
 });
 
+test("Header brand stays logo-only in both languages", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    const brand = html.match(
+      /<a[^>]*class="manual-mark"[^>]*>[\s\S]*?<\/a>/,
+    )?.[0];
+
+    assert.ok(brand);
+    assert.match(brand, /<img[^>]*class="manual-mark__avatar"/);
+    assert.doesNotMatch(brand, /<strong(?:\s|>)/);
+  }
+});
+
+test("Hero owns the primary conversion while the profile stays editorial", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    const feature = html.match(
+      /<div class="manual-cover__feature">([\s\S]*?)<div class="manual-cover__footer">/,
+    )?.[1];
+    const footer = html.match(
+      /<div class="manual-cover__footer">([\s\S]*?)<div class="manual-flow-copy">/,
+    )?.[1];
+    const profile = html.match(
+      /<section class="manual-profile"[\s\S]*?<\/section>/,
+    )?.[0];
+
+    assert.ok(feature);
+    assert.match(feature, /class="manual-cover__pitch"/);
+    assert.match(feature, /class="manual-proof"/);
+    assert.match(feature, /class="manual-actions"/);
+
+    assert.ok(footer);
+    assert.match(footer, /class="[^\"]*manual-cover__lead[^\"]*"/);
+    assert.match(footer, /class="[^\"]*manual-cover__detail[^\"]*"/);
+    assert.doesNotMatch(footer, /class="manual-actions"/);
+
+    assert.ok(profile);
+    assert.doesNotMatch(profile, /class="manual-actions"/);
+  }
+});
+
 test("Header exposes the primary booking action in both languages", () => {
   for (const [html, label] of [
     [italianHtml, "Prenota una call"],
@@ -98,14 +137,14 @@ test("Critical visual assets use compact, cacheable formats", () => {
 
 test("Email links opt out of Cloudflare HTML rewriting", () => {
   for (const html of [italianHtml, englishHtml]) {
-    assert.equal(count(html, /<!--email_off-->/g), 3);
-    assert.equal(count(html, /<!--\/email_off-->/g), 3);
+    assert.equal(count(html, /<!--email_off-->/g), 2);
+    assert.equal(count(html, /<!--\/email_off-->/g), 2);
     assert.equal(
       count(
         html,
         /<!--email_off--><a[^>]*href="mailto:[^"]+"[^>]*>[\s\S]*?<\/a><!--\/email_off-->/g,
       ),
-      3,
+      2,
     );
   }
 });
