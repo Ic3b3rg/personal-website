@@ -37,12 +37,19 @@ const currentYear = new Date().getFullYear();
       <a href="#services">{labels.services}</a>
       <a href="#projects">{labels.projects}</a>
       <a href="#recommendations">{labels.recommendations}</a>
-      <a href="#faq">{labels.faq}</a>
+      <a class="manual-header__faq" href="#faq">{labels.faq}</a>
       <a
+        class="manual-header__language"
         href={alternateLanguageHref}
         hreflang={copy.language === "it" ? "en" : "it"}
         lang={copy.language === "it" ? "en" : "it"}
         >{labels.alternateLanguage}</a
+      >
+      <a
+        class="landing-button manual-header__cta"
+        href={LINKS.calDotCom}
+        target="_blank"
+        rel="noopener noreferrer">{copy.book}</a
       >
     </nav>
   </header>

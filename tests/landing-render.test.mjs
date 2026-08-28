@@ -59,6 +59,25 @@ test("Brand and workflow render their visual assets accessibly", () => {
   }
 });
 
+test("Header exposes the primary booking action in both languages", () => {
+  for (const [html, label] of [
+    [italianHtml, "Prenota una call"],
+    [englishHtml, "Book a call"],
+  ]) {
+    const header = html.match(
+      /<header class="manual-header">[\s\S]*?<\/header>/,
+    )?.[0];
+
+    assert.ok(header);
+    assert.equal(count(header, /class="[^"]*\bmanual-header__cta\b[^"]*"/g), 1);
+    assert.match(
+      header,
+      /<a[^>]*class="[^"]*\bmanual-header__cta\b[^"]*"[^>]*href="https:\/\/cal\.com\/silvio-ceccarini-gqz1ul"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*>/,
+    );
+    assert.match(header, new RegExp(`>${label}</a>`));
+  }
+});
+
 test("Critical visual assets use compact, cacheable formats", () => {
   for (const html of [italianHtml, englishHtml]) {
     assert.match(
