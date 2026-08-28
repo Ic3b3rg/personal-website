@@ -883,31 +883,22 @@ p {
 
 .manual-project {
   display: grid;
-  min-height: 500px;
-  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  min-height: 400px;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
 }
 
 .manual-project__identity {
-  display: flex;
+  display: grid;
   min-width: 0;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 52px;
-  padding: 44px clamp(28px, 5vw, 64px) 52px;
+  place-items: center;
+  padding: 36px clamp(24px, 4vw, 48px);
   border-right: 1px solid var(--landing-line);
-}
-
-.manual-project__identity > span {
-  color: var(--landing-orange);
-  font-size: 0.7rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.08em;
 }
 
 .manual-project__identity img {
   display: block;
-  width: min(100%, 190px);
-  height: 130px;
+  width: min(100%, 210px);
+  height: 112px;
   margin-inline: auto;
   object-fit: contain;
   object-position: center;
@@ -918,7 +909,7 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(56px, 8vw, 104px) clamp(28px, 7vw, 88px);
+  padding: clamp(44px, 6vw, 72px) clamp(28px, 6vw, 72px);
 }
 
 .manual-project__context {
@@ -938,11 +929,11 @@ p {
 }
 
 .manual-project__content .manual-copy-stack {
-  margin-top: 32px;
+  margin-top: 26px;
 }
 
 .manual-project__content .landing-text-link {
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .manual-quotes {
@@ -950,12 +941,13 @@ p {
 }
 
 .manual-quotes blockquote {
-  display: grid;
-  min-height: 42svh;
-  grid-template-columns: minmax(0, 1fr) 80px;
-  gap: 40px;
-  align-items: center;
-  padding: 52px clamp(24px, 7vw, 100px) 52px 68px;
+  display: flex;
+  min-height: clamp(300px, 36svh, 440px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 28px;
+  padding: 56px clamp(24px, 7vw, 100px) 56px 68px;
   border-bottom: 1px solid var(--landing-line);
 }
 
@@ -971,11 +963,24 @@ p {
   line-height: 1.08;
 }
 
+.manual-quote__signature {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 14px;
+}
+
+.manual-quote__signature::before {
+  width: 32px;
+  height: 1px;
+  background: var(--landing-orange);
+  content: "";
+}
+
 .manual-quotes cite {
   color: var(--landing-orange);
   font-size: 0.76rem;
   font-style: normal;
-  text-align: right;
 }
 
 .manual-contact__header {
@@ -1298,23 +1303,20 @@ p {
   }
 
   .manual-project__identity {
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 32px 24px;
+    padding: 30px 24px;
     border-right: 0;
     border-bottom: 1px solid var(--landing-line);
   }
 
   .manual-project__identity img {
-    width: 150px;
-    height: 94px;
-    margin-right: 0;
-    margin-left: auto;
-    object-position: right center;
+    width: 170px;
+    height: 86px;
+    margin-inline: auto;
+    object-position: center;
   }
 
   .manual-project__content {
-    padding: 52px 24px 64px;
+    padding: 44px 24px 52px;
   }
 }
 
@@ -1468,14 +1470,9 @@ p {
   }
 
   .manual-quotes blockquote {
-    min-height: 48svh;
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 56px 22px;
-  }
-
-  .manual-quotes cite {
-    text-align: left;
+    min-height: auto;
+    gap: 24px;
+    padding: 52px 22px;
   }
 
   .manual-contact__header {
@@ -1549,7 +1546,7 @@ p {
   }
 
   .manual-project__identity img {
-    width: 130px;
+    width: 145px;
   }
 
   .manual-faq-list summary {

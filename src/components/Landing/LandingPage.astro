@@ -272,7 +272,9 @@ const capabilityIcons = [
           copy.recommendations.map((recommendation) => (
             <blockquote>
               <p>“{recommendation.quote}”</p>
-              <cite>{recommendation.initials}</cite>
+              <footer class="manual-quote__signature">
+                <cite>{recommendation.initials}</cite>
+              </footer>
             </blockquote>
           ))
         }

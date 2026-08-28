@@ -197,6 +197,42 @@ test("Project evidence and external destinations render on both languages", () =
   }
 });
 
+test("Project identities center their logos without editorial counters", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    const projectList = html.match(
+      /<ul class="manual-projects">([\s\S]*?)<\/ul>/,
+    )?.[1];
+    const identities = [
+      ...(projectList?.matchAll(
+        /<div class="manual-project__identity">([\s\S]*?)<\/div>/g,
+      ) ?? []),
+    ];
+
+    assert.ok(projectList);
+    assert.equal(identities.length, 3);
+
+    for (const identity of identities) {
+      assert.match(identity[1], /<img(?:\s|>)/);
+      assert.doesNotMatch(identity[1], /<span(?:\s|>)/);
+    }
+  }
+});
+
+test("Recommendation signatures follow their quotes", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    const quotes = [...html.matchAll(/<blockquote>([\s\S]*?)<\/blockquote>/g)];
+
+    assert.equal(quotes.length, 3);
+
+    for (const quote of quotes) {
+      assert.match(
+        quote[1],
+        /<p>[\s\S]*?<\/p><footer class="manual-quote__signature"><cite>[A-Z]\.\s?[A-Z]\.<\/cite><\/footer>/,
+      );
+    }
+  }
+});
+
 test("English page mirrors projects, FAQ, and contact sections", () => {
   assert.equal(count(englishHtml, /<h1(?:\s|>)/g), 1);
   assert.match(englishHtml, /id="projects"/);
