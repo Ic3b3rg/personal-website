@@ -45,7 +45,7 @@ test("Brand and workflow render their visual assets accessibly", () => {
   for (const [html, flowTitle] of pages) {
     assert.match(
       html,
-      /<a[^>]*class="manual-mark"[^>]*>[\s\S]*?<img[^>]*class="manual-mark__avatar"[^>]*src="\/favicon\.ico"/,
+      /<a[^>]*class="manual-mark"[^>]*>[\s\S]*?<img[^>]*class="manual-mark__avatar"[^>]*src="\/silvio-avatar\.35c8d6f7\.png"/,
     );
 
     const renderedFlowTitle = html.match(
@@ -56,6 +56,38 @@ test("Brand and workflow render their visual assets accessibly", () => {
     assert.match(renderedFlowTitle, new RegExp(`aria-label="${flowTitle}"`));
     assert.equal(count(renderedFlowTitle, /data-flow-stage/g), 3);
     assert.equal(count(renderedFlowTitle, /data-flow-connector/g), 2);
+  }
+});
+
+test("Critical visual assets use compact, cacheable formats", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    assert.match(
+      html,
+      /<link rel="icon" type="image\/png" href="\/silvio-avatar\.35c8d6f7\.png">/,
+    );
+    assert.match(
+      html,
+      /href="\/fonts\/cabinet-grotesk-variable\.68ea8405\.woff2" as="font" type="font\/woff2"/,
+    );
+    assert.match(
+      html,
+      /href="\/fonts\/satoshi-variable\.ea7da896\.woff2" as="font" type="font\/woff2"/,
+    );
+    assert.doesNotMatch(html, /\.ttf(?:"|')/);
+  }
+});
+
+test("Email links opt out of Cloudflare HTML rewriting", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    assert.equal(count(html, /<!--email_off-->/g), 3);
+    assert.equal(count(html, /<!--\/email_off-->/g), 3);
+    assert.equal(
+      count(
+        html,
+        /<!--email_off--><a[^>]*href="mailto:[^"]+"[^>]*>[\s\S]*?<\/a><!--\/email_off-->/g,
+      ),
+      3,
+    );
   }
 });
 

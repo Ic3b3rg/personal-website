@@ -49,7 +49,52 @@ jobs:
           chmod 600 "$RUNNER_TEMP/deploy-ssh/key"
           ssh-keyscan -H "$SSH_HOST" > "$RUNNER_TEMP/deploy-ssh/known_hosts"
 
-      - name: Deploy and reload nginx
+      - name: Install Nginx response headers
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh \
+            -i "$RUNNER_TEMP/deploy-ssh/key" \
+            -o IdentitiesOnly=yes \
+            -o UserKnownHostsFile="$RUNNER_TEMP/deploy-ssh/known_hosts" \
+            "$SSH_USER@$SSH_HOST" \
+            'set -eu
+             target=/etc/nginx/conf.d/personal-website-security.conf
+             candidate=$(mktemp)
+             backup=$(mktemp)
+             had_previous=0
+             cleanup() {
+               rm -f "$candidate"
+               sudo rm -f "$backup"
+             }
+             trap cleanup EXIT
+             cat > "$candidate"
+             if sudo test -f "$target"; then
+               sudo cp "$target" "$backup"
+               had_previous=1
+             fi
+             restore_previous() {
+               if [ "$had_previous" -eq 1 ]; then
+                 sudo install -m 644 "$backup" "$target"
+               else
+                 sudo rm -f "$target"
+               fi
+             }
+             sudo install -m 644 "$candidate" "$target"
+             if ! sudo nginx -t; then
+               restore_previous
+               sudo nginx -t
+               exit 1
+             fi
+             if ! sudo systemctl reload nginx; then
+               restore_previous
+               sudo nginx -t
+               sudo systemctl reload nginx
+               exit 1
+             fi' < deploy/nginx/personal-website-security.conf
+
+      - name: Deploy site
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
@@ -59,7 +104,32 @@ jobs:
             -o IdentitiesOnly=yes \
             -o UserKnownHostsFile="$RUNNER_TEMP/deploy-ssh/known_hosts" \
             "$SSH_USER@$SSH_HOST" \
-            'tar -xzf - -C /var/www/personal-website/dist && sudo systemctl reload nginx'
+            'tar -xzf - -C /var/www/personal-website/dist'
+
+      - name: Verify production response headers
+        run: |
+          headers=$(mktemp)
+          body=$(mktemp)
+          trap 'rm -f "$headers" "$body"' EXIT
+          curl \
+            --fail \
+            --retry 5 \
+            --retry-all-errors \
+            --retry-delay 2 \
+            --dump-header "$headers" \
+            --output "$body" \
+            "https://silvioceccarini.dev/it/?deploy=$GITHUB_SHA"
+          grep -qi '^content-security-policy:' "$headers"
+          grep -qi '^strict-transport-security:' "$headers"
+          grep -qi '^cross-origin-opener-policy:' "$headers"
+          grep -qi '^x-frame-options:' "$headers"
+          grep -qi '^x-content-type-options:' "$headers"
+          grep -qi '^referrer-policy:' "$headers"
+          grep -qi '^permissions-policy:' "$headers"
+          grep -qi 'no-transform' "$headers"
+          if grep -q 'email-decode.min.js' "$body"; then
+            exit 1
+          fi
 
       - name: Remove temporary SSH files
         if: always()
