@@ -98,6 +98,40 @@ test("Hero owns the primary conversion while the profile stays editorial", () =>
   }
 });
 
+test("Internal content groups use semantic icons instead of counters", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    const situations = html.match(
+      /<ul class="manual-profile__situations">([\s\S]*?)<\/ul>/,
+    )?.[1];
+    const team = html.match(
+      /<ul[^>]*class="manual-team-spec"[^>]*>([\s\S]*?)<\/ul>/,
+    )?.[1];
+    const capabilities = html.match(
+      /<ul[^>]*data-capabilities-list[^>]*>([\s\S]*?)<\/ul>/,
+    )?.[1];
+    const faqs = html.match(
+      /<div class="manual-faq-list">([\s\S]*?)<\/section>/,
+    )?.[1];
+
+    assert.ok(situations);
+    assert.equal(count(situations, /data-landing-icon=/g), 3);
+    assert.doesNotMatch(situations, />0[1-9]</);
+
+    assert.ok(team);
+    assert.equal(count(team, /data-landing-icon=/g), 3);
+    assert.doesNotMatch(team, />0[1-9]</);
+
+    assert.ok(capabilities);
+    assert.equal(count(capabilities, /data-landing-icon=/g), 6);
+    assert.doesNotMatch(capabilities, />0[1-9]</);
+
+    assert.ok(faqs);
+    assert.doesNotMatch(faqs, /<summary><span[^>]*>/);
+    assert.equal(count(html, /data-landing-icon=/g), 12);
+    assert.doesNotMatch(html, /data-manual-chapter="\d/);
+  }
+});
+
 test("Header exposes the primary booking action in both languages", () => {
   for (const [html, label] of [
     [italianHtml, "Prenota una call"],

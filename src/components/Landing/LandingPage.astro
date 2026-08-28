@@ -2,6 +2,7 @@
 import { LINKS } from "../../lib/constants";
 import ChapterHeader from "./ChapterHeader.astro";
 import FaqList from "./FaqList.astro";
+import LandingIcon from "./LandingIcon.astro";
 import LandingActions from "./LandingActions.astro";
 import ProjectFlowFigure from "./ProjectFlowFigure.astro";
 import ProjectShowcase from "./ProjectShowcase.astro";
@@ -16,6 +17,16 @@ interface Props {
 const { copy, alternateLanguageHref } = Astro.props;
 const { labels } = copy;
 const currentYear = new Date().getFullYear();
+const situationIcons = ["idea", "support", "release"] as const;
+const teamIcons = ["layers", "workflow", "users"] as const;
+const capabilityIcons = [
+  "browser",
+  "server",
+  "mobile",
+  "database",
+  "deploy",
+  "ai",
+] as const;
 ---
 
 <div class="manual" data-landing="manual">
@@ -118,9 +129,18 @@ const currentYear = new Date().getFullYear();
       aria-label={labels.profile}
       data-manual-chapter={labels.profile}
     >
-      <div class="manual-profile__situations">
-        {copy.introduction.slice(0, 3).map((paragraph) => <p>{paragraph}</p>)}
-      </div>
+      <ul class="manual-profile__situations">
+        {
+          copy.introduction.slice(0, 3).map((paragraph, index) => (
+            <li>
+              <span class="manual-profile__situation-icon">
+                <LandingIcon name={situationIcons[index]} />
+              </span>
+              <p>{paragraph}</p>
+            </li>
+          ))
+        }
+      </ul>
       <div class="manual-profile__method">
         <div class="manual-copy-stack manual-profile__method-lead">
           {copy.introduction.slice(3, 5).map((paragraph) => <p>{paragraph}</p>)}
@@ -134,7 +154,7 @@ const currentYear = new Date().getFullYear();
     <section
       class="manual-chapter"
       id="services"
-      data-manual-chapter={`01 / ${labels.services}`}
+      data-manual-chapter={copy.services[0].title}
     >
       <ChapterHeader
         index="01"
@@ -154,7 +174,10 @@ const currentYear = new Date().getFullYear();
       </div>
     </section>
 
-    <section class="manual-chapter" data-manual-chapter={`02 / ${labels.team}`}>
+    <section
+      class="manual-chapter"
+      data-manual-chapter={copy.services[1].title}
+    >
       <ChapterHeader
         index="02"
         title={copy.services[1].title}
@@ -164,11 +187,13 @@ const currentYear = new Date().getFullYear();
         <div class="manual-copy-stack manual-copy-stack--large">
           {copy.services[1].paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>
-        <ol class="manual-team-spec" data-team-flow>
+        <ul class="manual-team-spec" data-team-flow>
           {
             copy.services[1].pillars?.map((pillar, index) => (
               <li data-team-node>
-                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span class="manual-list-icon">
+                  <LandingIcon name={teamIcons[index]} />
+                </span>
                 <div>
                   <h3>{pillar.title}</h3>
                   <p>{pillar.body}</p>
@@ -176,13 +201,13 @@ const currentYear = new Date().getFullYear();
               </li>
             ))
           }
-        </ol>
+        </ul>
       </div>
     </section>
 
     <section
       class="manual-chapter manual-chapter--orange"
-      data-manual-chapter={`03 / ${labels.method}`}
+      data-manual-chapter={copy.approachTitle}
     >
       <ChapterHeader
         index="03"
@@ -198,7 +223,7 @@ const currentYear = new Date().getFullYear();
 
     <section
       class="manual-chapter"
-      data-manual-chapter={`04 / ${labels.scope}`}
+      data-manual-chapter={copy.capabilitiesTitle}
     >
       <ChapterHeader
         index="04"
@@ -209,11 +234,13 @@ const currentYear = new Date().getFullYear();
         <div class="manual-copy-stack">
           {copy.capabilitiesParagraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>
-        <ol data-capabilities-list>
+        <ul data-capabilities-list>
           {
             copy.capabilityItems.map((capability, index) => (
               <li data-capability>
-                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span class="manual-list-icon">
+                  <LandingIcon name={capabilityIcons[index]} />
+                </span>
                 <div>
                   <h3>{capability.title}</h3>
                   <p>{capability.body}</p>
@@ -221,14 +248,14 @@ const currentYear = new Date().getFullYear();
               </li>
             ))
           }
-        </ol>
+        </ul>
       </div>
     </section>
 
     <section
       class="manual-chapter manual-work"
       id="projects"
-      data-manual-chapter={`05 / ${labels.work}`}
+      data-manual-chapter={copy.projectsTitle}
     >
       <ChapterHeader index="05" title={copy.projectsTitle} />
       <ProjectShowcase projects={copy.projects} />
@@ -237,7 +264,7 @@ const currentYear = new Date().getFullYear();
     <section
       class="manual-chapter manual-recommendations"
       id="recommendations"
-      data-manual-chapter={`06 / ${labels.trust}`}
+      data-manual-chapter={copy.recommendationsTitle}
     >
       <ChapterHeader index="06" title={copy.recommendationsTitle} />
       <div class="manual-quotes">
@@ -255,7 +282,7 @@ const currentYear = new Date().getFullYear();
     <section
       class="manual-chapter manual-contact"
       id="contact"
-      data-manual-chapter={`07 / ${labels.contact}`}
+      data-manual-chapter={labels.contact}
     >
       <header class="manual-contact__header">
         <span aria-hidden="true">07</span>
@@ -276,7 +303,7 @@ const currentYear = new Date().getFullYear();
     <section
       class="manual-chapter manual-faq"
       id="faq"
-      data-manual-chapter={`08 / ${labels.questions}`}
+      data-manual-chapter={copy.faqTitle}
     >
       <ChapterHeader index="08" title={copy.faqTitle} />
       <FaqList faqs={copy.faqs} />

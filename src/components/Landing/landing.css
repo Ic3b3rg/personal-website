@@ -142,6 +142,18 @@ p {
   text-decoration-thickness: 2px;
 }
 
+.manual-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
 .manual {
   min-height: 100vh;
   overflow-x: clip;
@@ -602,41 +614,37 @@ p {
 }
 
 .manual-profile__situations {
-  counter-reset: situation;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.manual-profile__situations p {
+.manual-profile__situations li {
   display: grid;
   min-height: 186px;
   grid-template-columns: 120px minmax(0, 1fr);
   align-items: center;
   border-top: 1px solid var(--landing-line);
-  color: var(--landing-warm-white);
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-size: clamp(1.65rem, 3.5vw, 3.25rem);
-  font-weight: 520;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  counter-increment: situation;
 }
 
-.manual-profile__situations p::before {
+.manual-profile__situation-icon {
   display: grid;
   height: 100%;
   place-items: center;
   align-self: stretch;
   border-right: 1px solid var(--landing-line);
   color: var(--landing-orange);
-  font-family: "Satoshi", sans-serif;
-  font-size: 0.72rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.08em;
-  content: "0" counter(situation);
 }
 
-.manual-profile__situations p:not(:empty) {
-  column-gap: clamp(24px, 5vw, 68px);
+.manual-profile__situations p {
   padding-right: clamp(24px, 6vw, 88px);
+  padding-left: clamp(24px, 5vw, 68px);
+  color: var(--landing-warm-white);
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: clamp(1.65rem, 3.5vw, 3.25rem);
+  font-weight: 520;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .manual-profile__method {
@@ -759,14 +767,13 @@ p {
   border-left: 1px solid var(--landing-line);
 }
 
-.manual-team-spec li > span {
+.manual-team-spec .manual-list-icon {
+  display: block;
   color: var(--landing-orange);
-  font-size: 0.68rem;
-  font-variant-numeric: tabular-nums;
 }
 
 .manual-team-spec li div {
-  margin-top: 28px;
+  margin-top: 22px;
 }
 
 .manual-team-spec h3 {
@@ -819,7 +826,7 @@ p {
   gap: clamp(52px, 8vw, 104px);
 }
 
-.manual-chapter__body--capabilities ol {
+.manual-chapter__body--capabilities ul {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -837,11 +844,15 @@ p {
   border-bottom: 1px solid var(--landing-line);
 }
 
-.manual-chapter__body--capabilities li > span {
-  padding-top: 4px;
+.manual-chapter__body--capabilities .manual-list-icon {
+  display: block;
+  padding-top: 1px;
   color: var(--landing-orange);
-  font-size: 0.68rem;
-  font-variant-numeric: tabular-nums;
+}
+
+.manual-chapter__body--capabilities .manual-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .manual-chapter__body--capabilities h3 {
@@ -1041,7 +1052,7 @@ p {
   position: relative;
   display: grid;
   min-height: 118px;
-  grid-template-columns: 46px minmax(0, 1fr) 28px;
+  grid-template-columns: minmax(0, 1fr) 28px;
   gap: 24px;
   align-items: center;
   padding: 24px clamp(24px, 6vw, 80px) 24px 48px;
@@ -1069,12 +1080,6 @@ p {
   color: var(--landing-orange);
 }
 
-.manual-faq-list summary > span {
-  color: var(--landing-orange);
-  font-size: 0.68rem;
-  font-variant-numeric: tabular-nums;
-}
-
 .manual-faq-list summary strong {
   max-width: 48ch;
   font-family: "Cabinet Grotesk", sans-serif;
@@ -1086,7 +1091,7 @@ p {
 
 .manual-faq-list details > p {
   max-width: 70ch;
-  padding: 0 clamp(80px, 11vw, 150px) 44px 118px;
+  padding: 0 clamp(80px, 11vw, 150px) 44px 48px;
   color: #cbc6bc;
   font-size: 1.05rem;
   line-height: 1.65;
@@ -1394,15 +1399,20 @@ p {
     scroll-margin-top: 62px;
   }
 
-  .manual-profile__situations p {
+  .manual-profile__situations li {
     min-height: 154px;
     grid-template-columns: 54px minmax(0, 1fr);
+  }
+
+  .manual-profile__situations p {
+    padding-right: 22px;
+    padding-left: 20px;
     font-size: clamp(1.55rem, 7.8vw, 2.35rem);
   }
 
-  .manual-profile__situations p:not(:empty) {
-    column-gap: 20px;
-    padding-right: 22px;
+  .manual-profile__situation-icon .manual-icon {
+    width: 23px;
+    height: 23px;
   }
 
   .manual-profile__method {
@@ -1488,7 +1498,7 @@ p {
 
   .manual-faq-list summary {
     min-height: 104px;
-    grid-template-columns: 32px minmax(0, 1fr) 22px;
+    grid-template-columns: minmax(0, 1fr) 22px;
     gap: 12px;
     padding: 22px;
   }
@@ -1498,7 +1508,7 @@ p {
   }
 
   .manual-faq-list details > p {
-    padding: 0 22px 36px 66px;
+    padding: 0 22px 36px;
     font-size: 1rem;
   }
 
@@ -1543,13 +1553,13 @@ p {
   }
 
   .manual-faq-list summary {
-    grid-template-columns: 26px minmax(0, 1fr) 18px;
+    grid-template-columns: minmax(0, 1fr) 18px;
     padding-inline: 18px;
   }
 
   .manual-faq-list details > p {
     padding-right: 18px;
-    padding-left: 56px;
+    padding-left: 18px;
   }
 }
 
