@@ -13,18 +13,20 @@ const expectedProjectUrls = [
 test("Italian landing copy exposes the approved long-form narrative", () => {
   const copy = landingCopy.it;
 
-  assert.equal(copy.role, "Sviluppatore Software Freelance Senior");
+  assert.equal(copy.role, "Software Freelance Senior");
   assert.equal(
     copy.headline,
-    "Sviluppo app da zero. Affianco team web e mobile.",
+    "Sviluppo app da zero o collaboro con team web e mobile",
   );
+  assert.match(copy.heroBody[2], /^Costruisco applicazioni da zero,/);
   assert.match(copy.proof, /^7\+ anni di esperienza/);
   assert.equal(copy.heroBody.length, 3);
   assert.equal(copy.introduction.length, 7);
   assert.deepEqual(
     copy.services.map(({ title }) => title),
-    ["Sviluppo app end-to-end", "Supporto a team web e mobile"],
+    ["Sviluppo", "Supporto a team web e mobile"],
   );
+  assert.match(copy.approachParagraphs[2], /^Durante lo sviluppo può capitare/);
   assert.equal(copy.capabilityItems.length, 6);
   assert.equal(copy.projects.length, 3);
   assert.equal(copy.faqs.length, 5);
@@ -62,6 +64,11 @@ test("English copy is a complete native adaptation of the Italian structure", ()
   const english = landingCopy.en;
 
   assert.equal(english.role, "Senior Freelance Software Engineer");
+  assert.equal(
+    english.headline,
+    "I build apps from scratch or collaborate with web and mobile teams",
+  );
+  assert.equal(english.services[0].title, "Development");
   assert.match(english.proof, /^7\+ years of experience/);
   assert.equal(english.heroBody.length, italian.heroBody.length);
   assert.equal(english.introduction.length, italian.introduction.length);

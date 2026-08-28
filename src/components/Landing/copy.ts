@@ -127,8 +127,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       questions: "FAQ",
       social: "Profili professionali",
     },
-    role: "Sviluppatore Software Freelance Senior",
-    headline: "Sviluppo app da zero. Affianco team web e mobile.",
+    role: "Software Freelance Senior",
+    headline: "Sviluppo app da zero o collaboro con team web e mobile",
     heroBody: [
       "Hai un’idea da trasformare in prodotto? Oppure un progetto già avviato e ti serve qualcuno che possa dare una mano al team?",
       "Sono Silvio Ceccarini e mi occupo di sviluppo software custom per startup e aziende.",
@@ -152,7 +152,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     ],
     services: [
       {
-        title: "Sviluppo app end-to-end",
+        title: "Sviluppo",
         subtitle: "Dalla prima definizione, fino al rilascio",
         paragraphs: [
           "Se stai partendo da zero, posso seguire direttamente lo sviluppo software end-to-end della tua applicazione.",
@@ -343,7 +343,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       social: "Professional profiles",
     },
     role: "Senior Freelance Software Engineer",
-    headline: "I build apps from scratch. I support web and mobile teams.",
+    headline:
+      "I build apps from scratch or collaborate with web and mobile teams",
     heroBody: [
       "Have an idea you want to turn into a product? Or is your project already underway and your team needs an extra pair of hands?",
       "I’m Silvio Ceccarini, and I build custom software for startups and companies.",
@@ -367,7 +368,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     ],
     services: [
       {
-        title: "End-to-end app development",
+        title: "Development",
         subtitle: "From the first definition through release",
         paragraphs: [
           "If you are starting from zero, I can take direct responsibility for the end-to-end development of your application.",
