@@ -820,6 +820,12 @@ p {
   border-top: 1px solid rgb(116 64 6 / 55%);
 }
 
+.manual-about__copy {
+  display: grid;
+  max-width: 910px;
+  gap: clamp(48px, 6vw, 80px);
+}
+
 .manual-chapter__body--capabilities {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1.15fr);

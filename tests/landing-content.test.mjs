@@ -32,6 +32,26 @@ test("Italian landing copy exposes the approved long-form narrative", () => {
   assert.equal(copy.faqs.length, 5);
 });
 
+test("About copy preserves the approved Italian narrative in both languages", () => {
+  const italian = landingCopy.it;
+  const english = landingCopy.en;
+
+  assert.equal(italian.aboutTitle, "Chi sono");
+  assert.deepEqual(italian.aboutParagraphs, [
+    "Mi piace capire come funzionano le cose. Soprattutto, mettendoci mano.",
+    "Sono una persona curiosa e pratica. Assemblo, smonto, sperimento, anche sbagliando, per capire cosa posso fare di meglio.",
+    "È un approccio che mi accompagna nel software, ma la curiosità per la tecnologia non finisce con il mio lavoro. Al di fuori, costruisco e piloto droni FPV e sperimento con elettronica, IoT e domotica.",
+    "Non mi basta che qualcosa funzioni: voglio capire perché funziona, come è costruito e dove può essere migliorato.",
+    "Quando voglio cambiare completamente registro, mi perdo in un videogioco o suono la batteria. Quest’ultima rappresenta un altro lato di me: richiede coordinazione, ritmo, pratica e costanza, ma, allo stesso tempo, lascia spazio alla creatività.",
+    "Infatti mi piace quando posso trasformare un'idea in qualcosa di concreto: che sia la musica, un'applicazione, un drone assemblato pezzo per pezzo o un'automazione che prima esisteva soltanto nella mia testa.",
+    "In fondo, il filo conduttore è sempre lo stesso: mi diverte partire da un'idea e capire come farla funzionare.",
+  ]);
+  assert.equal(english.aboutTitle, "About me");
+  assert.equal(english.aboutParagraphs.length, italian.aboutParagraphs.length);
+  assert.match(english.aboutParagraphs.join(" "), /FPV drones/);
+  assert.match(english.aboutParagraphs.join(" "), /play the drums/);
+});
+
 test("Project evidence uses the approved products, facts, and destinations", () => {
   const projects = landingCopy.it.projects;
 

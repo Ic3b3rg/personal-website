@@ -282,12 +282,38 @@ const capabilityIcons = [
     </section>
 
     <section
+      class="manual-chapter manual-about"
+      id="about"
+      data-manual-chapter={copy.aboutTitle}
+    >
+      <ChapterHeader index="07" title={copy.aboutTitle} />
+      <div class="manual-chapter__body manual-about__body">
+        <div class="manual-about__copy">
+          <div class="manual-copy-stack manual-copy-stack--large">
+            {
+              copy.aboutParagraphs
+                .slice(0, 4)
+                .map((paragraph) => <p>{paragraph}</p>)
+            }
+          </div>
+          <div class="manual-copy-stack">
+            {
+              copy.aboutParagraphs
+                .slice(4)
+                .map((paragraph) => <p>{paragraph}</p>)
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
       class="manual-chapter manual-contact"
       id="contact"
       data-manual-chapter={labels.contact}
     >
       <header class="manual-contact__header">
-        <span aria-hidden="true">07</span>
+        <span aria-hidden="true">08</span>
         <div>
           <p>{copy.contactPrompt}</p>
           <h2>{copy.contactLead}</h2>
@@ -307,7 +333,7 @@ const capabilityIcons = [
       id="faq"
       data-manual-chapter={copy.faqTitle}
     >
-      <ChapterHeader index="08" title={copy.faqTitle} />
+      <ChapterHeader index="09" title={copy.faqTitle} />
       <FaqList faqs={copy.faqs} />
     </section>
   </main>

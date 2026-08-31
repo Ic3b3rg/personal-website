@@ -233,6 +233,50 @@ test("Recommendation signatures follow their quotes", () => {
   }
 });
 
+test("About section renders the complete narrative on both routes", () => {
+  for (const [html, title, lead, closing] of [
+    [
+      italianHtml,
+      "Chi sono",
+      "Mi piace capire come funzionano le cose.",
+      "capire come farla funzionare.",
+    ],
+    [
+      englishHtml,
+      "About me",
+      "I like understanding how things work",
+      "figuring out how to make it work.",
+    ],
+  ]) {
+    const about = html.match(
+      /<section class="manual-chapter manual-about" id="about"[\s\S]*?<\/section>/,
+    )?.[0];
+
+    assert.ok(about);
+    assert.match(about, new RegExp(`<h2>${title}</h2>`));
+    assert.equal(count(about, /<p(?:\s|>)/g), 7);
+    assert.ok(about.includes(lead));
+    assert.ok(about.includes(closing));
+  }
+});
+
+test("Late chapters keep the approved order and numbering", () => {
+  for (const html of [italianHtml, englishHtml]) {
+    const chapters = [
+      ...html.matchAll(
+        /<section class="manual-chapter[^"]*" id="(recommendations|about|contact|faq)"[\s\S]*?<span aria-hidden="true">(\d{2})<\/span>/g,
+      ),
+    ].map((match) => [match[1], match[2]]);
+
+    assert.deepEqual(chapters, [
+      ["recommendations", "06"],
+      ["about", "07"],
+      ["contact", "08"],
+      ["faq", "09"],
+    ]);
+  }
+});
+
 test("English page mirrors projects, FAQ, and contact sections", () => {
   assert.equal(count(englishHtml, /<h1(?:\s|>)/g), 1);
   assert.match(englishHtml, /id="projects"/);

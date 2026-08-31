@@ -88,6 +88,8 @@ export interface LandingCopy {
   projects: LandingProject[];
   recommendationsTitle: string;
   recommendations: LandingRecommendation[];
+  aboutTitle: string;
+  aboutParagraphs: string[];
   contactPrompt: string;
   contactLead: string;
   contactTitle: string;
@@ -274,6 +276,16 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
           "Silvio ha sviluppato e sta migliorando costantemente, per nostro conto, un algoritmo proprietario…",
         initials: "V.C.",
       },
+    ],
+    aboutTitle: "Chi sono",
+    aboutParagraphs: [
+      "Mi piace capire come funzionano le cose. Soprattutto, mettendoci mano.",
+      "Sono una persona curiosa e pratica. Assemblo, smonto, sperimento, anche sbagliando, per capire cosa posso fare di meglio.",
+      "È un approccio che mi accompagna nel software, ma la curiosità per la tecnologia non finisce con il mio lavoro. Al di fuori, costruisco e piloto droni FPV e sperimento con elettronica, IoT e domotica.",
+      "Non mi basta che qualcosa funzioni: voglio capire perché funziona, come è costruito e dove può essere migliorato.",
+      "Quando voglio cambiare completamente registro, mi perdo in un videogioco o suono la batteria. Quest’ultima rappresenta un altro lato di me: richiede coordinazione, ritmo, pratica e costanza, ma, allo stesso tempo, lascia spazio alla creatività.",
+      "Infatti mi piace quando posso trasformare un'idea in qualcosa di concreto: che sia la musica, un'applicazione, un drone assemblato pezzo per pezzo o un'automazione che prima esisteva soltanto nella mia testa.",
+      "In fondo, il filo conduttore è sempre lo stesso: mi diverte partire da un'idea e capire come farla funzionare.",
     ],
     contactPrompt: "Hai qualcosa in fase di sviluppo?",
     contactLead: "Parliamone",
@@ -489,6 +501,16 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
           "Silvio developed a proprietary algorithm for us and continues to improve it.",
         initials: "V.C.",
       },
+    ],
+    aboutTitle: "About me",
+    aboutParagraphs: [
+      "I like understanding how things work—especially when I can get hands-on.",
+      "I’m curious and practical. I assemble, take things apart and experiment—even when that means getting things wrong—to understand what I can do better.",
+      "That approach follows me into software, but my curiosity about technology does not end with work. Outside it, I build and fly FPV drones and experiment with electronics, IoT and home automation.",
+      "It is not enough for me that something works: I want to understand why it works, how it is built and where it can be improved.",
+      "When I want a complete change of pace, I lose myself in a video game or play the drums. Drumming represents another side of me: it takes coordination, rhythm, practice and consistency while still leaving room for creativity.",
+      "I like turning an idea into something concrete: whether it is music, an application, a drone assembled piece by piece or an automation that previously existed only in my head.",
+      "Ultimately, the common thread is always the same: I enjoy starting with an idea and figuring out how to make it work.",
     ],
     contactPrompt: "Building something?",
     contactLead: "Let’s talk",
